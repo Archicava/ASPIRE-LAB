@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 
 import { useAuth } from '@/components/auth-context';
 import { StatusIndicator } from '@/components/status-indicator';
+import { GithubLink } from '@/components/github-link';
 
 const navLinks = [
   { href: '/workspace', label: 'Workspace' },
@@ -77,7 +78,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
               background: 'var(--color-border)'
             }}
           />
-          <div style={{ display: 'flex', gap: '0.4rem' }}>
+          <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -98,6 +99,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                 </Link>
               );
             })}
+            <GithubLink />
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>

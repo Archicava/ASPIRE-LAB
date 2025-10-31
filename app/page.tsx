@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import { FeatureGrid } from '@/components/feature-grid';
 import { InsightHighlight } from '@/components/insight-highlight';
+import { GithubLink } from '@/components/github-link';
 
 const features = [
   {
@@ -61,7 +62,7 @@ export default function LandingPage() {
             Securely orchestrate Ratio1 inference jobs, capture structured case data aligned with the
             Romanian ASD research cohort, and turn raw assessments into auditable, data-backed decisions.
           </p>
-          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <Link
               href="/login"
               style={{
@@ -91,6 +92,7 @@ export default function LandingPage() {
             >
               Explore ASD Insights
             </Link>
+            <GithubLink variant="labelled" />
           </div>
         </section>
 
