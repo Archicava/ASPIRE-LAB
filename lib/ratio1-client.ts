@@ -1,5 +1,5 @@
-import createRatio1EdgeNodeClient from '@ratio1/edge-node-client';
-import { createRatio1EdgeNodeBrowserClient } from '@ratio1/edge-node-client/browser';
+import createEdgeSdk from '@ratio1/edge-sdk-ts';
+import { createEdgeSdkBrowserClient } from '@ratio1/edge-sdk-ts/browser';
 import FormDataNode from 'form-data';
 import crossFetch from 'cross-fetch';
 
@@ -17,8 +17,8 @@ const nodeHttpAdapter = {
   fetch: (url: string, options?: RequestInit) => crossFetch(url, options as any)
 };
 
-type NodeClient = ReturnType<typeof createRatio1EdgeNodeClient>;
-type BrowserClient = ReturnType<typeof createRatio1EdgeNodeBrowserClient>;
+type NodeClient = ReturnType<typeof createEdgeSdk>;
+type BrowserClient = ReturnType<typeof createEdgeSdkBrowserClient>;
 
 type GlobalWithRatio1 = typeof globalThis & {
   __ratio1NodeClient?: NodeClient;
@@ -27,7 +27,7 @@ type GlobalWithRatio1 = typeof globalThis & {
 const globalWithRatio1 = globalThis as GlobalWithRatio1;
 
 function createNodeClient(): NodeClient {
-  return createRatio1EdgeNodeClient({
+  return createEdgeSdk({
     ...sharedOptions,
     httpAdapter: nodeHttpAdapter,
     formDataCtor: FormDataNode as unknown as typeof FormData
@@ -35,7 +35,7 @@ function createNodeClient(): NodeClient {
 }
 
 function createBrowserClient(): BrowserClient {
-  return createRatio1EdgeNodeBrowserClient(sharedOptions);
+  return createEdgeSdkBrowserClient(sharedOptions);
 }
 
 export function getRatio1NodeClient(): NodeClient {
@@ -61,4 +61,3 @@ export function getRatio1NodeClient(): NodeClient {
 export function getRatio1Client(): NodeClient | BrowserClient {
   return typeof window === 'undefined' ? getRatio1NodeClient() : createBrowserClient();
 }
-

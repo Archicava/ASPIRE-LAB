@@ -3,21 +3,17 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 type User = {
-  id: string;
   username: string;
   displayName: string;
-  role: string;
+  role?: string;
+  metadata?: Record<string, unknown>;
 };
 
 type AuthContextValue = {
   user: User | null;
   login: (payload: { username: string; password: string }) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
 };
-
-const STORAGE_KEY = 'ratio1-auth';
-const DEMO_USERNAME = process.env.NEXT_PUBLIC_RATIO1_DEMO_USERNAME || 'demo';
-const DEMO_PASSWORD = process.env.NEXT_PUBLIC_RATIO1_DEMO_PASSWORD || 'demo';
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
@@ -25,40 +21,102 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    if (typeof window === 'undefined') {
-      return;
-    }
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored) {
+    let cancelled = false;
+
+    async function loadSession() {
+      if (typeof window === 'undefined') {
+        return;
+      }
+
       try {
-        const parsed = JSON.parse(stored) as User;
-        setUser(parsed);
-      } catch {
-        window.localStorage.removeItem(STORAGE_KEY);
+        const response = await fetch('/api/auth/session', {
+          method: 'GET',
+          credentials: 'include'
+        });
+
+        if (!response.ok) {
+          if (!cancelled) {
+            setUser(null);
+          }
+          return;
+        }
+
+        const data = (await response.json()) as {
+          authenticated: boolean;
+          user?: { username: string; role?: string; metadata?: Record<string, unknown> };
+        };
+
+        if (!cancelled && data.authenticated && data.user) {
+          const metadata = data.user.metadata ?? {};
+          const displayName =
+            typeof metadata.displayName === 'string'
+              ? metadata.displayName
+              : typeof metadata.fullName === 'string'
+                ? metadata.fullName
+                : data.user.username;
+
+          setUser({
+            username: data.user.username,
+            role: data.user.role,
+            displayName,
+            metadata
+          });
+        }
+      } catch (error) {
+        console.warn('[auth] Failed to load session', error);
+        if (!cancelled) {
+          setUser(null);
+        }
       }
     }
+
+    void loadSession();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const login = useCallback(async ({ username, password }: { username: string; password: string }) => {
-    if (username.trim() !== DEMO_USERNAME || password.trim() !== DEMO_PASSWORD) {
-      throw new Error('Invalid credentials');
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ username, password })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      const error = typeof data?.error === 'string' ? data.error : 'Unable to authenticate';
+      throw new Error(error);
     }
 
-    const nextUser: User = {
-      id: `user_${crypto.randomUUID()}`,
-      username: DEMO_USERNAME,
-      displayName: 'Demo Clinician',
-      role: 'operator'
-    };
+    const userData = data.user as { username: string; role?: string; metadata?: Record<string, unknown> };
+    const metadata = userData.metadata ?? {};
+    const displayName =
+      typeof metadata.displayName === 'string'
+        ? metadata.displayName
+        : typeof metadata.fullName === 'string'
+          ? metadata.fullName
+          : userData.username;
 
-    setUser(nextUser);
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextUser));
+    setUser({
+      username: userData.username,
+      role: userData.role,
+      displayName,
+      metadata
+    });
   }, []);
 
-  const logout = useCallback(() => {
-    setUser(null);
-    if (typeof window !== 'undefined') {
-      window.localStorage.removeItem(STORAGE_KEY);
+  const logout = useCallback(async () => {
+    try {
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include'
+      });
+    } finally {
+      setUser(null);
     }
   }, []);
 
@@ -74,4 +132,3 @@ export function useAuth() {
   }
   return context;
 }
-

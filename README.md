@@ -28,16 +28,18 @@ Then open http://localhost:3000 to explore the prototype. By default the app boo
 - `RATIO1_USE_MOCKS` (or `NEXT_PUBLIC_RATIO1_USE_MOCKS`) – set to `false` when deploying alongside a Ratio1 Edge Node to force live endpoints.
 - `EE_CHAINSTORE_API_URL` / `EE_R1FS_API_URL` – CStore and R1FS endpoints exposed by the edge node container. Presence of both automatically disables mock mode.
 - `EE_CHAINSTORE_PEERS` – optional JSON array of peer URLs passed to the Ratio1 SDK.
+- `EE_CSTORE_AUTH_HKEY` / `EE_CSTORE_AUTH_SECRET` – credentials consumed by `@ratio1/cstore-auth-ts` to authenticate operators against CStore.
+- `AUTH_SESSION_COOKIE` / `AUTH_SESSION_TTL_SECONDS` – optional overrides for the session cookie name and lifespan (defaults: `r1-session`, 86400 seconds).
 - `RATIO1_CASES_HKEY` / `RATIO1_JOBS_HKEY` – hash keys used when persisting case records and inference jobs into CStore (defaults align with the ASD prototype namespace).
 
 Run `npm run seed:cohort` to regenerate the JSON seeds (`data/cohort-seed.json`, `data/cohort-cstore.json`) from the Excel workbook when the source dataset is updated.
 
-When the endpoints are configured the server routes reuse the Ratio1 Drive methodology—constructing a singleton `@ratio1/edge-node-client`, hydrating the node via the env-driven URLs, and persisting submissions into CStore while surfacing R1FS/CStore health snapshots.
+When the endpoints are configured the server routes reuse the Ratio1 Drive methodology—constructing a singleton Edge SDK instance via `@ratio1/edge-sdk-ts`, hydrating the node via the env-driven URLs, and persisting submissions into CStore while surfacing R1FS/CStore health snapshots.
 
 ## Tech stack
 
 - Next.js App Router (TypeScript, React 18)
-- Local state + context for mock authentication and toast notifications
+- Session-backed auth via `@ratio1/cstore-auth-ts` plus React context for UI state and toast notifications
 - Ratio1 Edge Node SDK integration with automatic fallback to mock data
 
 ## Folder structure

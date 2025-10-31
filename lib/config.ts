@@ -72,6 +72,12 @@ const rawUseMocks = process.env.NEXT_PUBLIC_RATIO1_USE_MOCKS || process.env.RATI
 const fallbackUseMocks = !(cstoreApiUrl && r1fsApiUrl);
 const useMocks = parseBoolean(rawUseMocks, fallbackUseMocks);
 
+const authSessionCookieName = process.env.AUTH_SESSION_COOKIE || 'r1-session';
+const parsedSessionTtl = parseInt(process.env.AUTH_SESSION_TTL_SECONDS || '86400', 10);
+const authSessionTtlSeconds = Number.isFinite(parsedSessionTtl) ? parsedSessionTtl : 86400;
+const cstoreAuthHkey = process.env.EE_CSTORE_AUTH_HKEY || process.env.CSTORE_AUTH_HKEY;
+const cstoreAuthSecret = process.env.EE_CSTORE_AUTH_SECRET || process.env.CSTORE_AUTH_SECRET;
+
 export const platformConfig = {
   DEBUG: rawDebug,
   useMocks,
@@ -83,8 +89,15 @@ export const platformConfig = {
   demoCredentials: {
     username: process.env.RATIO1_DEMO_USERNAME || 'demo',
     password: process.env.RATIO1_DEMO_PASSWORD || 'demo'
+  },
+  auth: {
+    sessionCookieName: authSessionCookieName,
+    sessionTtlSeconds: authSessionTtlSeconds,
+    cstore: {
+      hkey: cstoreAuthHkey,
+      secret: cstoreAuthSecret
+    }
   }
 } as const;
 
 export type PlatformConfig = typeof platformConfig;
-
