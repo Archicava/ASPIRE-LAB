@@ -42,7 +42,7 @@ export function CaseList({ title, cases, showActions = true }: CaseListProps) {
               padding: '1.2rem 1.35rem',
               borderRadius: '1rem',
               border: '1px solid var(--color-border)',
-              background: 'rgba(255,255,255,0.9)',
+              background: 'linear-gradient(135deg, rgba(220, 233, 255, 0.82), rgba(240, 246, 255, 0.95))',
               display: 'grid',
               gap: '0.35rem'
             }}

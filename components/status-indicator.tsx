@@ -22,7 +22,7 @@ export function StatusIndicator() {
           alignItems: 'center',
           gap: '0.6rem',
           border: '1px solid var(--color-border)',
-          background: 'white',
+          background: 'var(--color-card)',
           padding: '0.45rem 0.75rem',
           borderRadius: '0.75rem',
           cursor: 'pointer',
@@ -75,8 +75,8 @@ function resolveTone(status: Record<string, unknown> | null) {
   if (!status) {
     return {
       label: 'Unknown',
-      background: 'rgba(148, 163, 184, 0.18)',
-      color: '#475569'
+      background: 'rgba(99, 125, 199, 0.25)',
+      color: '#1e3a8a'
     };
   }
 
@@ -84,21 +84,20 @@ function resolveTone(status: Record<string, unknown> | null) {
   if (statusValue.includes('error') || statusValue.includes('fail')) {
     return {
       label: 'Error',
-      background: 'rgba(239, 68, 68, 0.15)',
+      background: 'rgba(30, 64, 175, 0.25)',
       color: 'var(--color-danger)'
     };
   }
   if (statusValue.includes('warn') || statusValue.includes('degraded')) {
     return {
       label: 'Warn',
-      background: 'rgba(245, 158, 11, 0.18)',
+      background: 'rgba(59, 130, 246, 0.22)',
       color: 'var(--color-warning)'
     };
   }
   return {
     label: 'Healthy',
-    background: 'rgba(16, 185, 129, 0.18)',
+    background: 'rgba(96, 165, 250, 0.2)',
     color: 'var(--color-success)'
   };
 }
-

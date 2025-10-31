@@ -8,10 +8,10 @@ type JobTableProps = {
 };
 
 const statusColor: Record<InferenceJob['status'], string> = {
-  queued: '#f59e0b',
-  running: '#5b6cf0',
-  succeeded: '#10b981',
-  failed: '#ef4444'
+  queued: '#60a5fa',
+  running: '#2563eb',
+  succeeded: '#1e40af',
+  failed: '#172554'
 };
 
 export function JobTable({ jobs }: JobTableProps) {

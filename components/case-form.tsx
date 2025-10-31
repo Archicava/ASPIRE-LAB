@@ -477,7 +477,7 @@ function CheckboxGroup({
                 padding: '0.55rem 1.1rem',
                 borderRadius: '999px',
                 border: active ? '1px solid var(--color-accent)' : '1px solid var(--color-border)',
-                background: active ? 'var(--color-accent-soft)' : 'rgba(255,255,255,0.9)',
+                background: active ? 'var(--color-accent-soft)' : 'rgba(226, 236, 255, 0.9)',
                 color: active ? 'var(--color-accent)' : 'var(--color-text-secondary)',
                 fontWeight: 600,
                 cursor: 'pointer'
@@ -513,7 +513,7 @@ function ToggleRow({
         padding: '0.9rem 1.2rem',
         borderRadius: '0.9rem',
         border: '1px solid var(--color-border)',
-        background: 'rgba(255,255,255,0.9)'
+        background: 'linear-gradient(135deg, rgba(222, 234, 255, 0.82), rgba(240, 247, 255, 0.94))'
       }}
     >
       <span style={{ fontWeight: 600 }}>{label}</span>
@@ -541,9 +541,9 @@ function ToggleRow({
             width: '18px',
             height: '18px',
             borderRadius: '50%',
-            background: 'white',
+            background: 'var(--color-card)',
             transition: 'left 150ms ease',
-            boxShadow: '0 4px 12px rgba(17,24,39,0.15)'
+            boxShadow: '0 4px 12px rgba(11, 28, 61, 0.2)'
           }}
         />
       </label>
@@ -556,7 +556,7 @@ const inputStyle: CSSProperties = {
   borderRadius: '0.85rem',
   border: '1px solid var(--color-border)',
   fontSize: '1rem',
-  background: 'rgba(255,255,255,0.95)'
+  background: 'rgba(234, 242, 255, 0.95)'
 };
 
 const textareaStyle: CSSProperties = {

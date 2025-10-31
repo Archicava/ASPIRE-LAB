@@ -46,10 +46,13 @@ export function PlatformStatusCard({ status }: PlatformStatusCardProps) {
             borderRadius: '1rem',
             border: '1px solid var(--color-border)',
             padding: '1.1rem',
-            background: 'rgba(255,255,255,0.92)'
+            background: 'linear-gradient(135deg, rgba(219, 232, 255, 0.85), rgba(236, 244, 255, 0.95))'
           }}
         >
-          <span className="pill" style={{ background: 'rgba(91,108,240,0.12)', color: 'var(--color-accent)' }}>
+          <span
+            className="pill"
+            style={{ background: 'rgba(29, 78, 216, 0.16)', color: 'var(--color-accent)' }}
+          >
             CStore
           </span>
           <p
@@ -67,10 +70,13 @@ export function PlatformStatusCard({ status }: PlatformStatusCardProps) {
             borderRadius: '1rem',
             border: '1px solid var(--color-border)',
             padding: '1.1rem',
-            background: 'rgba(255,255,255,0.92)'
+            background: 'linear-gradient(135deg, rgba(219, 232, 255, 0.85), rgba(236, 244, 255, 0.95))'
           }}
         >
-          <span className="pill" style={{ background: 'rgba(59,130,246,0.12)', color: 'var(--color-accent)' }}>
+          <span
+            className="pill"
+            style={{ background: 'rgba(37, 99, 235, 0.16)', color: 'var(--color-accent)' }}
+          >
             R1FS
           </span>
           <p
@@ -91,4 +97,3 @@ export function PlatformStatusCard({ status }: PlatformStatusCardProps) {
     </section>
   );
 }
-

@@ -122,7 +122,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
             }}
             style={{
               border: '1px solid var(--color-border)',
-              background: 'white',
+              background: 'var(--color-card)',
               padding: '0.55rem 1.1rem',
               borderRadius: '0.75rem',
               cursor: 'pointer',

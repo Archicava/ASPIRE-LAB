@@ -83,7 +83,7 @@ export default function LandingPage() {
                 padding: '0.85rem 1.75rem',
                 borderRadius: '999px',
                 border: '1px solid var(--color-border)',
-                background: 'white',
+                background: 'var(--color-card)',
                 color: 'var(--color-text-primary)',
                 fontWeight: 600,
                 fontSize: '1rem'
@@ -102,4 +102,3 @@ export default function LandingPage() {
     </main>
   );
 }
-

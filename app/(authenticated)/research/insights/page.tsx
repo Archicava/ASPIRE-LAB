@@ -138,7 +138,7 @@ export default function ResearchInsightsPage() {
                 padding: '1.1rem 1.3rem',
                 borderRadius: '1rem',
                 border: '1px solid var(--color-border)',
-                background: 'rgba(255,255,255,0.95)',
+                background: 'linear-gradient(135deg, rgba(220, 233, 255, 0.82), rgba(240, 246, 255, 0.95))',
                 display: 'grid',
                 gap: '0.35rem'
               }}
@@ -168,7 +168,7 @@ function MetricCard({ label, value, description }: { label: string; value: strin
         borderRadius: '1rem',
         border: '1px solid var(--color-border)',
         padding: '1.1rem',
-        background: 'rgba(255,255,255,0.92)',
+        background: 'linear-gradient(135deg, rgba(220, 233, 255, 0.82), rgba(240, 246, 255, 0.95))',
         display: 'grid',
         gap: '0.4rem'
       }}

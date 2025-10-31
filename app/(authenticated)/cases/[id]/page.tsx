@@ -210,7 +210,7 @@ function DataList({ title, items }: { title: string; items: [string, string][] }
         border: '1px solid var(--color-border)',
         display: 'grid',
         gap: '0.6rem',
-        background: 'rgba(255,255,255,0.92)'
+        background: 'linear-gradient(135deg, rgba(220, 233, 255, 0.82), rgba(240, 246, 255, 0.95))'
       }}
     >
       <p style={{ margin: 0, fontWeight: 600 }}>{title}</p>

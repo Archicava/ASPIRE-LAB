@@ -139,6 +139,6 @@ const inputStyle: CSSProperties = {
   borderRadius: '12px',
   border: '1px solid var(--color-border)',
   fontSize: '1rem',
-  backgroundColor: 'rgba(255,255,255,0.92)',
+  backgroundColor: 'rgba(232, 241, 255, 0.92)',
   transition: 'border-color 120ms ease'
 };

@@ -37,7 +37,7 @@ export function InsightHighlight() {
         <span
           className="pill"
           style={{
-            background: 'rgba(16, 185, 129, 0.12)',
+            background: 'rgba(59, 130, 246, 0.15)',
             color: 'var(--color-success)'
           }}
         >
@@ -80,4 +80,3 @@ export function InsightHighlight() {
     </section>
   );
 }
-

@@ -325,7 +325,7 @@ function Toggle({ value, onChange }: { value: boolean; onChange: (value: boolean
         border: '1px solid var(--color-border)',
         padding: '0.45rem 1rem',
         fontWeight: 600,
-        background: value ? 'var(--color-accent)' : 'white',
+        background: value ? 'var(--color-accent)' : 'var(--color-card)',
         color: value ? 'white' : 'var(--color-text-secondary)',
         cursor: 'pointer'
       }}
@@ -362,7 +362,7 @@ const inputStyle: CSSProperties = {
   borderRadius: '0.85rem',
   border: '1px solid var(--color-border)',
   fontSize: '1rem',
-  background: 'rgba(255,255,255,0.95)'
+  background: 'rgba(234, 242, 255, 0.95)'
 };
 
 const chipRowStyle: CSSProperties = {
@@ -376,7 +376,7 @@ function chipStyle(active: boolean): CSSProperties {
     padding: '0.5rem 1rem',
     borderRadius: '999px',
     border: active ? '1px solid var(--color-accent)' : '1px solid var(--color-border)',
-    background: active ? 'var(--color-accent-soft)' : 'rgba(255,255,255,0.9)',
+    background: active ? 'var(--color-accent-soft)' : 'rgba(226, 236, 255, 0.9)',
     color: active ? 'var(--color-accent)' : 'var(--color-text-secondary)',
     fontWeight: 600,
     cursor: 'pointer'
@@ -388,8 +388,7 @@ const stepperButtonStyle: CSSProperties = {
   height: '32px',
   borderRadius: '50%',
   border: '1px solid var(--color-border)',
-  background: 'white',
+  background: 'var(--color-card)',
   fontWeight: 600,
   cursor: 'pointer'
 };
-

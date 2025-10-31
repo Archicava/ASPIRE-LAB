@@ -40,9 +40,9 @@ export function StatCard({ label, value, change, tone = 'neutral', caption }: St
 function resolveToneBackground(tone: StatCardProps['tone']) {
   switch (tone) {
     case 'up':
-      return 'rgba(16, 185, 129, 0.14)';
+      return 'rgba(96, 165, 250, 0.2)';
     case 'down':
-      return 'rgba(239, 68, 68, 0.14)';
+      return 'rgba(30, 64, 175, 0.22)';
     default:
       return 'rgba(91,108,240,0.14)';
   }
@@ -58,4 +58,3 @@ function resolveToneColor(tone: StatCardProps['tone']) {
       return 'var(--color-accent)';
   }
 }
-
