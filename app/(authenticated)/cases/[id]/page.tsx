@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { ProbabilityBars } from '@/components/probability-bars';
 import { loadCaseRecord, loadInferenceJob } from '@/lib/data-platform';
 import { formatDate } from '@/lib/format';
+import { Hero } from '@/components/hero';
 
 type CaseDetailPageProps = {
   params: { id: string };
@@ -22,11 +23,12 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
       style={{
         maxWidth: '1040px',
         margin: '0 auto',
-        padding: '0 1.5rem 4rem',
+        padding: '0 1.5rem 5rem',
         display: 'grid',
         gap: '1.5rem'
       }}
     >
+      <Hero title="Case Detail" />
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <Link href="/cases" style={{ color: 'var(--color-accent)', fontWeight: 600 }}>
           ← Back to cases

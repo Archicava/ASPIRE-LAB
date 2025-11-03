@@ -2,6 +2,7 @@ import { CaseList } from '@/components/case-list';
 import { ProbabilityBars } from '@/components/probability-bars';
 import { loadCaseRecords } from '@/lib/data-platform';
 import { CaseRecord } from '@/lib/types';
+import { Hero } from '@/components/hero';
 
 export default async function CasesPage() {
   const cases = await loadCaseRecords();
@@ -12,11 +13,12 @@ export default async function CasesPage() {
       style={{
         display: 'grid',
         gap: '1.5rem',
-        maxWidth: '960px',
+        maxWidth: '1040px',
         margin: '0 auto',
-        padding: '0 1.5rem 4rem'
+        padding: '0 1.5rem 5rem'
       }}
     >
+      <Hero title="Case Library" />
       <section
         className="card"
         style={{
@@ -36,7 +38,7 @@ export default async function CasesPage() {
         </header>
         <ProbabilityBars categories={aggregatedCategories} />
       </section>
-      <CaseList title="All cases" cases={cases} showActions={false} />
+      <CaseList title="All cases" cases={cases} showActions={false} enablePagination />
     </main>
   );
 }

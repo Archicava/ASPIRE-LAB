@@ -12,7 +12,8 @@
   --color-danger: #1e3a8a;
   --radius-card: 18px;
   --shadow-card: 0 22px 50px -25px rgba(20, 33, 66, 0.35);
-  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
 }
 
 * {
@@ -25,7 +26,8 @@ body {
   overflow-x: hidden;
   padding: 0;
   margin: 0;
-  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
   background: linear-gradient(180deg, #d7e4ff 0%, #eaf1ff 45%, #f6f9ff 100%);
   color: var(--color-text-primary);
 }

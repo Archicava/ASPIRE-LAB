@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 
 import { PredictiveLab } from '@/components/predictive-lab';
+import { Hero } from '@/components/hero';
 import { loadCaseRecord, loadCaseRecords } from '@/lib/data-platform';
 
 export default async function PredictPage({ searchParams }: { searchParams?: { caseId?: string } }) {
@@ -16,11 +17,14 @@ export default async function PredictPage({ searchParams }: { searchParams?: { c
   return (
     <main
       style={{
+        display: 'grid',
+        gap: '1.5rem',
         maxWidth: '1040px',
         margin: '0 auto',
-        padding: '0 1.5rem 4rem'
+        padding: '0 1.5rem 5rem'
       }}
     >
+      <Hero title="Predictive Lab" />
       <PredictiveLab cases={cases} seedCase={seedCase} />
     </main>
   );

@@ -1,5 +1,6 @@
 import { InsightHighlight } from '@/components/insight-highlight';
 import { getCohortStats } from '@/lib/cohort-data';
+import { Hero } from '@/components/hero';
 
 const researchChapters = [
   {
@@ -65,11 +66,12 @@ export default function ResearchInsightsPage() {
       style={{
         display: 'grid',
         gap: '1.5rem',
-        maxWidth: '960px',
+        maxWidth: '1040px',
         margin: '0 auto',
-        padding: '0 1.5rem 4rem'
+        padding: '0 1.5rem 5rem'
       }}
     >
+      <Hero title="Research" />
       <section className="card" style={{ padding: '1.9rem', display: 'grid', gap: '1rem' }}>
         <span className="pill">Romanian ASD cohort synthesis</span>
         <h1 style={{ margin: 0, fontSize: '1.9rem' }}>

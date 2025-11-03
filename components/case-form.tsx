@@ -204,7 +204,7 @@ export function CaseForm({ useMocks = true }: CaseFormProps) {
         </span>
       </header>
 
-      <section style={{ display: 'grid', gap: '1.4rem' }}>
+      <section style={{ display: 'grid', gap: '1.25rem' }}>
         <h2 style={{ margin: 0, fontSize: '1.2rem' }}>Demographics</h2>
         <div className="grid-two">
           <Field label="Case label" error={errors.caseLabel}>
@@ -278,7 +278,7 @@ export function CaseForm({ useMocks = true }: CaseFormProps) {
         />
       </section>
 
-      <section style={{ display: 'grid', gap: '1.4rem' }}>
+      <section style={{ display: 'grid', gap: '1.25rem' }}>
         <h2 style={{ margin: 0, fontSize: '1.2rem' }}>Developmental profile</h2>
         <CheckboxGroup
           label="Developmental delays"
@@ -287,16 +287,18 @@ export function CaseForm({ useMocks = true }: CaseFormProps) {
           onToggle={(option) => handleToggle('delays', option)}
           error={errors.delays}
         />
-        <ToggleRow
-          label="Dysmorphic features observed"
-          value={values.dysmorphicFeatures}
-          onChange={(val) => handleBoolean('dysmorphicFeatures', val)}
-        />
-        <ToggleRow
-          label="Regression documented"
-          value={values.regressionObserved}
-          onChange={(val) => handleBoolean('regressionObserved', val)}
-        />
+        <div className="grid-two">
+          <ToggleRow
+            label="Dysmorphic features observed"
+            value={values.dysmorphicFeatures}
+            onChange={(val) => handleBoolean('dysmorphicFeatures', val)}
+          />
+          <ToggleRow
+            label="Regression documented"
+            value={values.regressionObserved}
+            onChange={(val) => handleBoolean('regressionObserved', val)}
+          />
+        </div>
         <Field label="Comorbidities">
           <input
             value={values.comorbidities}
@@ -307,7 +309,7 @@ export function CaseForm({ useMocks = true }: CaseFormProps) {
         </Field>
       </section>
 
-      <section style={{ display: 'grid', gap: '1.4rem' }}>
+      <section style={{ display: 'grid', gap: '1.25rem' }}>
         <h2 style={{ margin: 0, fontSize: '1.2rem' }}>Clinical assessments</h2>
         <div className="grid-two">
           <Field label="ADOS calibrated score">
@@ -330,11 +332,6 @@ export function CaseForm({ useMocks = true }: CaseFormProps) {
               style={inputStyle}
             />
           </Field>
-          <ToggleRow
-            label="EEG anomalies"
-            value={values.eegAnomalies}
-            onChange={(val) => handleBoolean('eegAnomalies', val)}
-          />
           <Field label="Head circumference (cm)">
             <input
               type="number"
@@ -346,6 +343,11 @@ export function CaseForm({ useMocks = true }: CaseFormProps) {
             />
           </Field>
         </div>
+        <ToggleRow
+          label="EEG anomalies"
+          value={values.eegAnomalies}
+          onChange={(val) => handleBoolean('eegAnomalies', val)}
+        />
         <Field label="MRI findings">
           <textarea
             value={values.mriFindings ?? ''}
@@ -357,7 +359,7 @@ export function CaseForm({ useMocks = true }: CaseFormProps) {
         </Field>
       </section>
 
-      <section style={{ display: 'grid', gap: '1.4rem' }}>
+      <section style={{ display: 'grid', gap: '1.25rem' }}>
         <h2 style={{ margin: 0, fontSize: '1.2rem' }}>Behavior and sensory profile</h2>
         <CheckboxGroup
           label="Behavioral concerns"
@@ -384,7 +386,7 @@ export function CaseForm({ useMocks = true }: CaseFormProps) {
         </Field>
       </section>
 
-      <section style={{ display: 'grid', gap: '1.4rem' }}>
+      <section style={{ display: 'grid', gap: '1.25rem' }}>
         <h2 style={{ margin: 0, fontSize: '1.2rem' }}>Clinical narrative</h2>
         <Field label="Notes" error={errors.notes}>
           <textarea
@@ -556,7 +558,8 @@ const inputStyle: CSSProperties = {
   borderRadius: '0.85rem',
   border: '1px solid var(--color-border)',
   fontSize: '1rem',
-  background: 'rgba(234, 242, 255, 0.95)'
+  background: 'rgba(234, 242, 255, 0.95)',
+  width: '100%'
 };
 
 const textareaStyle: CSSProperties = {
