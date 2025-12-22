@@ -30,11 +30,14 @@ async function authenticate(username: string, password: string): Promise<Authent
       return {
         username: demoUsername,
         role: 'operator',
+        type: 'simple',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         metadata: { displayName: 'Demo Clinician' }
-      } as AuthenticatedUser;
+      } as unknown as AuthenticatedUser;
     }
 
-    throw new InvalidCredentialsError('Invalid credentials');
+    throw new InvalidCredentialsError();
   }
 
   const client = getAuthClient();

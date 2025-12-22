@@ -89,8 +89,9 @@ export function CaseForm({ useMocks = true }: CaseFormProps) {
     setValues((prev) => {
       const current = prev[key];
       if (Array.isArray(current)) {
-        const exists = current.includes(option);
-        const next = exists ? current.filter((item) => item !== option) : [...current, option];
+        const arr = current as string[];
+        const exists = arr.includes(option);
+        const next = exists ? arr.filter((item) => item !== option) : [...arr, option];
         return { ...prev, [key]: next };
       }
       return prev;

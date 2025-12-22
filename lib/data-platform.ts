@@ -71,12 +71,9 @@ export async function loadCaseRecords(): Promise<CaseRecord[]> {
   }
 
   const client = getRatio1NodeClient();
-  const response = await client.cstore.hgetall(
-    { hkey: platformConfig.casesHKey },
-    { fullResponse: true }
-  );
+  const response = await client.cstore.hgetall({ hkey: platformConfig.casesHKey });
 
-  const parsed = parseHashPayload<CaseRecord>((response as any).result);
+  const parsed = parseHashPayload<CaseRecord>((response as any).result ?? response);
   return parsed.items;
 }
 
@@ -94,12 +91,9 @@ export async function loadCaseRecord(caseId: string): Promise<CaseRecord | undef
   }
 
   const client = getRatio1NodeClient();
-  const response = await client.cstore.hget(
-    { hkey: platformConfig.casesHKey, key: caseId },
-    { fullResponse: true }
-  );
+  const response = await client.cstore.hget({ hkey: platformConfig.casesHKey, key: caseId });
 
-  const value = (response as any).result ?? (response as any)?.value;
+  const value = (response as any).result ?? (response as any)?.value ?? response;
 
   if (!value) {
     return undefined;
@@ -126,12 +120,9 @@ export async function loadInferenceJobs(): Promise<InferenceJob[]> {
   }
 
   const client = getRatio1NodeClient();
-  const response = await client.cstore.hgetall(
-    { hkey: platformConfig.jobsHKey },
-    { fullResponse: true }
-  );
+  const response = await client.cstore.hgetall({ hkey: platformConfig.jobsHKey });
 
-  const parsed = parseHashPayload<InferenceJob>((response as any).result);
+  const parsed = parseHashPayload<InferenceJob>((response as any).result ?? response);
   return parsed.items;
 }
 
@@ -141,12 +132,9 @@ export async function loadInferenceJob(jobId: string): Promise<InferenceJob | un
   }
 
   const client = getRatio1NodeClient();
-  const response = await client.cstore.hget(
-    { hkey: platformConfig.jobsHKey, key: jobId },
-    { fullResponse: true }
-  );
+  const response = await client.cstore.hget({ hkey: platformConfig.jobsHKey, key: jobId });
 
-  const value = (response as any).result ?? (response as any)?.value;
+  const value = (response as any).result ?? (response as any)?.value ?? response;
   if (!value) {
     return undefined;
   }
@@ -167,8 +155,8 @@ export async function loadInferenceJob(jobId: string): Promise<InferenceJob | un
 }
 
 export async function loadPlatformStatus(): Promise<{
-  cstore?: unknown;
-  r1fs?: unknown;
+  cstore?: Record<string, unknown>;
+  r1fs?: Record<string, unknown>;
 }> {
   if (platformConfig.useMocks) {
     const now = new Date().toISOString();
@@ -189,13 +177,13 @@ export async function loadPlatformStatus(): Promise<{
 
   const client = getRatio1NodeClient();
   const [cstoreStatus, r1fsStatus] = await Promise.all([
-    client.cstore.getStatus({ fullResponse: true }),
-    client.r1fs.getStatus({ fullResponse: true })
+    client.cstore.getStatus(),
+    client.r1fs.getStatus()
   ]);
 
   return {
-    cstore: cstoreStatus,
-    r1fs: r1fsStatus
+    cstore: cstoreStatus as unknown as Record<string, unknown>,
+    r1fs: r1fsStatus as unknown as Record<string, unknown>
   };
 }
 
@@ -285,18 +273,15 @@ async function storeCaseInLiveMode(
   let edgeNode: string | undefined;
 
   try {
-    const uploadResponse = await client.r1fs.addFileBase64(
-      {
-        file_base64_str: Buffer.from(JSON.stringify(payload), 'utf-8').toString('base64'),
-        filename: `${record.id}.json`,
-        owner: platformConfig.casesHKey
-      },
-      { fullResponse: true }
-    );
+    const uploadResponse = await client.r1fs.addFileBase64({
+      file_base64_str: Buffer.from(JSON.stringify(payload), 'utf-8').toString('base64'),
+      filename: `${record.id}.json`
+    });
 
     const cidCandidate =
       (uploadResponse as any)?.result?.cid ??
       (uploadResponse as any)?.cid ??
+      uploadResponse ??
       undefined;
 
     payloadCid = typeof cidCandidate === 'string' ? cidCandidate : undefined;
