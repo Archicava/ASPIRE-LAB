@@ -181,14 +181,16 @@ export function CaseForm({ useMocks = true }: CaseFormProps) {
       onSubmit={handleSubmit}
       className="card fade-in"
       style={{
-        padding: '2rem',
+        padding: 'clamp(1.5rem, 4.5vw, 2rem)',
         display: 'grid',
-        gap: '2rem'
+        gap: 'clamp(1.5rem, 4.5vw, 2rem)'
       }}
     >
       <header style={{ display: 'grid', gap: '0.6rem' }}>
         <span className="pill">Case submission wizard</span>
-        <h1 style={{ margin: 0, fontSize: '1.85rem' }}>Describe the clinical presentation</h1>
+        <h1 style={{ margin: 0, fontSize: 'clamp(1.5rem, 4vw, 1.85rem)' }}>
+          Describe the clinical presentation
+        </h1>
         <p style={{ margin: 0, color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
           Capture the full ASD profile across prenatal history, developmental milestones, and
           neuro-behavioral assessments. Data stays on-device until you dispatch the Ratio1 job.
@@ -206,7 +208,7 @@ export function CaseForm({ useMocks = true }: CaseFormProps) {
 
       <section style={{ display: 'grid', gap: '1.25rem' }}>
         <h2 style={{ margin: 0, fontSize: '1.2rem' }}>Demographics</h2>
-        <div className="grid-two">
+        <div className="grid-two form-grid">
           <Field label="Case label" error={errors.caseLabel}>
             <input
               value={values.caseLabel}
@@ -287,7 +289,7 @@ export function CaseForm({ useMocks = true }: CaseFormProps) {
           onToggle={(option) => handleToggle('delays', option)}
           error={errors.delays}
         />
-        <div className="grid-two">
+        <div className="grid-two form-grid">
           <ToggleRow
             label="Dysmorphic features observed"
             value={values.dysmorphicFeatures}
@@ -311,7 +313,7 @@ export function CaseForm({ useMocks = true }: CaseFormProps) {
 
       <section style={{ display: 'grid', gap: '1.25rem' }}>
         <h2 style={{ margin: 0, fontSize: '1.2rem' }}>Clinical assessments</h2>
-        <div className="grid-two">
+        <div className="grid-two form-grid">
           <Field label="ADOS calibrated score">
             <input
               type="number"
@@ -399,20 +401,27 @@ export function CaseForm({ useMocks = true }: CaseFormProps) {
         </Field>
       </section>
 
-      <footer style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <p style={{ margin: 0, color: 'var(--color-text-secondary)', fontSize: '0.95rem' }}>
+      <footer className="form-footer">
+        <p
+          style={{
+            margin: 0,
+            color: 'var(--color-text-secondary)',
+            fontSize: 'clamp(0.9rem, 2.5vw, 0.95rem)',
+            lineHeight: 1.5
+          }}
+        >
           Submission encrypts data client-side and registers job metadata within CStore namespace ASD-RO-01.
         </p>
         <button
           type="submit"
           disabled={submitting}
           style={{
-            padding: '0.95rem 2.1rem',
+            padding: 'clamp(0.75rem, 2.8vw, 0.95rem) clamp(1.6rem, 5vw, 2.1rem)',
             borderRadius: '999px',
             background: 'var(--color-accent)',
             color: 'white',
             fontWeight: 600,
-            fontSize: '1rem',
+            fontSize: 'clamp(0.95rem, 2.8vw, 1rem)',
             border: 'none',
             cursor: 'pointer',
             opacity: submitting ? 0.65 : 1
@@ -435,7 +444,7 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <label style={{ display: 'grid', gap: '0.4rem' }}>
+    <label className="form-field">
       <span style={{ fontWeight: 600 }}>{label}</span>
       {children}
       {error ? (
@@ -459,7 +468,7 @@ function CheckboxGroup({
   error?: string;
 }) {
   return (
-    <div style={{ display: 'grid', gap: '0.75rem' }}>
+    <div style={{ display: 'grid', gap: '0.9rem' }}>
       <span style={{ fontWeight: 600 }}>{label}</span>
       <div
         style={{
@@ -475,12 +484,12 @@ function CheckboxGroup({
               key={option}
               type="button"
               onClick={() => onToggle(option)}
-              style={{
-                padding: '0.55rem 1.1rem',
-                borderRadius: '999px',
-                border: active ? '1px solid var(--color-accent)' : '1px solid var(--color-border)',
-                background: active ? 'var(--color-accent-soft)' : 'rgba(226, 236, 255, 0.9)',
-                color: active ? 'var(--color-accent)' : 'var(--color-text-secondary)',
+          style={{
+            padding: 'clamp(0.45rem, 2.2vw, 0.55rem) clamp(0.85rem, 3.6vw, 1.1rem)',
+            borderRadius: '999px',
+            border: active ? '1px solid var(--color-accent)' : '1px solid var(--color-border)',
+            background: active ? 'var(--color-accent-soft)' : 'rgba(226, 236, 255, 0.9)',
+            color: active ? 'var(--color-accent)' : 'var(--color-text-secondary)',
                 fontWeight: 600,
                 cursor: 'pointer'
               }}
@@ -512,10 +521,12 @@ function ToggleRow({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '0.9rem 1.2rem',
+        padding: 'clamp(0.75rem, 3vw, 0.9rem) clamp(0.95rem, 3.6vw, 1.2rem)',
         borderRadius: '0.9rem',
         border: '1px solid var(--color-border)',
-        background: 'linear-gradient(135deg, rgba(222, 234, 255, 0.82), rgba(240, 247, 255, 0.94))'
+        background: 'linear-gradient(135deg, rgba(222, 234, 255, 0.82), rgba(240, 247, 255, 0.94))',
+        flexWrap: 'wrap',
+        gap: '0.75rem'
       }}
     >
       <span style={{ fontWeight: 600 }}>{label}</span>
@@ -557,7 +568,7 @@ const inputStyle: CSSProperties = {
   padding: '0.75rem 1rem',
   borderRadius: '0.85rem',
   border: '1px solid var(--color-border)',
-  fontSize: '1rem',
+  fontSize: 'clamp(0.95rem, 2.6vw, 1rem)',
   background: 'rgba(234, 242, 255, 0.95)',
   width: '100%'
 };

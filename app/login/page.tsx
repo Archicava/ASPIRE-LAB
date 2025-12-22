@@ -51,7 +51,7 @@ export default function LoginPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '2rem'
+        padding: 'clamp(1.5rem, 4vw, 2rem)'
       }}
     >
       <form
@@ -60,10 +60,10 @@ export default function LoginPage() {
         style={{
           width: '100%',
           maxWidth: '420px',
-          padding: '2.35rem',
+          padding: 'clamp(1.6rem, 5vw, 2.35rem)',
           display: 'flex',
           flexDirection: 'column',
-          gap: '1.5rem'
+          gap: 'clamp(1.1rem, 4vw, 1.5rem)'
         }}
       >
         <header>
@@ -71,7 +71,7 @@ export default function LoginPage() {
           <h1
             style={{
               margin: '1.1rem 0 0.65rem',
-              fontSize: '1.85rem'
+              fontSize: 'clamp(1.6rem, 4.5vw, 1.85rem)'
             }}
           >
             Unlock your Ratio1 workspace
@@ -83,12 +83,12 @@ export default function LoginPage() {
         </header>
         <div
           style={{
-            padding: '0.75rem 1rem',
+            padding: 'clamp(0.65rem, 3vw, 0.75rem) clamp(0.85rem, 3.5vw, 1rem)',
             borderRadius: '0.85rem',
             border: '1px solid var(--color-border)',
             background: 'rgba(91,108,240,0.08)',
             color: 'var(--color-text-secondary)',
-            fontSize: '0.9rem'
+            fontSize: 'clamp(0.85rem, 2.8vw, 0.9rem)'
           }}
         >
           Demo credentials: <strong>{DEMO_USERNAME}</strong> / <strong>{DEMO_PASSWORD}</strong>

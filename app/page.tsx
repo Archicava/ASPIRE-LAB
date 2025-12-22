@@ -27,52 +27,28 @@ const features = [
 
 export default function LandingPage() {
   return (
-    <main style={{ padding: '3.5rem 0 6rem' }}>
-      <div
-        style={{
-          maxWidth: '1100px',
-          margin: '0 auto',
-          padding: '0 1.75rem',
-          display: 'grid',
-          gap: '3.25rem'
-        }}
-      >
+    <main className="landing-main">
+      <div className="landing-shell">
         <section className="fade-in">
           <span className="pill">Ratio1 Case Inference Studio</span>
-          <h1
-            style={{
-              margin: '1.25rem 0 1rem',
-              fontSize: '3.25rem',
-              lineHeight: 1.05,
-              fontWeight: 700,
-              letterSpacing: '-0.03em'
-            }}
-          >
+          <h1 className="hero-title">
             Clinical intelligence for autism cohorts — powered by decentralized AI.
           </h1>
-          <p
-            style={{
-              maxWidth: '640px',
-              fontSize: '1.125rem',
-              lineHeight: 1.65,
-              color: 'var(--color-text-secondary)',
-              marginBottom: '2.5rem'
-            }}
-          >
+          <p className="hero-lead">
             Securely orchestrate Ratio1 inference jobs, capture structured case data aligned with the
             Romanian ASD research cohort, and turn raw assessments into auditable, data-backed decisions.
           </p>
-          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
+          <div className="hero-actions">
             <Link
               href="/login"
               style={{
-                padding: '0.85rem 1.9rem',
+                padding: 'clamp(0.75rem, 2.6vw, 0.85rem) clamp(1.4rem, 5vw, 1.9rem)',
                 borderRadius: '999px',
                 background:
                   'radial-gradient(circle at 10% 20%, rgba(91,108,240,1) 0%, rgba(111,133,255,1) 45%, rgba(88,151,247,1) 100%)',
                 color: 'white',
                 fontWeight: 600,
-                fontSize: '1rem',
+                fontSize: 'clamp(0.95rem, 2.6vw, 1rem)',
                 boxShadow: '0 15px 30px -20px rgba(64, 77, 165, 0.65)'
               }}
             >
@@ -81,13 +57,13 @@ export default function LandingPage() {
             <Link
               href="/research/insights"
               style={{
-                padding: '0.85rem 1.75rem',
+                padding: 'clamp(0.75rem, 2.6vw, 0.85rem) clamp(1.2rem, 4.5vw, 1.75rem)',
                 borderRadius: '999px',
                 border: '1px solid var(--color-border)',
                 background: 'var(--color-card)',
                 color: 'var(--color-text-primary)',
                 fontWeight: 600,
-                fontSize: '1rem'
+                fontSize: 'clamp(0.95rem, 2.6vw, 1rem)'
               }}
             >
               Explore ASD Insights

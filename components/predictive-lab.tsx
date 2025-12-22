@@ -61,17 +61,21 @@ export function PredictiveLab({ cases, seedCase }: { cases: CaseRecord[]; seedCa
         gap: '1.5rem'
       }}
     >
-      <section className="card" style={{ padding: '1.6rem', display: 'grid', gap: '1.1rem' }}>
+      <section
+        className="card"
+        style={{ padding: 'clamp(1.3rem, 4vw, 1.6rem)', display: 'grid', gap: '1.1rem' }}
+      >
         <header style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
           <div>
             <p className="section-title">Predictive inference lab</p>
-            <h1 style={{ margin: '0.35rem 0 0', fontSize: '1.6rem', fontWeight: 600 }}>
+            <h1 style={{ margin: '0.35rem 0 0', fontSize: 'clamp(1.3rem, 3.6vw, 1.6rem)', fontWeight: 600 }}>
               Generate Ratio1 probability scenarios
             </h1>
           </div>
           <select
             value={selectedCaseId}
             onChange={(event) => setSelectedCaseId(event.target.value as typeof selectedCaseId)}
+            className="predictive-select"
             style={{
               padding: '0.6rem 0.85rem',
               borderRadius: '0.75rem',
@@ -96,9 +100,11 @@ export function PredictiveLab({ cases, seedCase }: { cases: CaseRecord[]; seedCa
 
       <section
         className="card"
-        style={{ padding: '1.7rem', display: 'grid', gap: '1.2rem' }}
+        style={{ padding: 'clamp(1.35rem, 4vw, 1.7rem)', display: 'grid', gap: '1.2rem' }}
       >
-        <h2 style={{ margin: 0, fontSize: '1.35rem', fontWeight: 600 }}>Clinical inputs</h2>
+        <h2 style={{ margin: 0, fontSize: 'clamp(1.15rem, 3.2vw, 1.35rem)', fontWeight: 600 }}>
+          Clinical inputs
+        </h2>
         <div
           style={{
             display: 'grid',
@@ -243,10 +249,15 @@ export function PredictiveLab({ cases, seedCase }: { cases: CaseRecord[]; seedCa
         </div>
       </section>
 
-      <section className="card" style={{ padding: '1.7rem', display: 'grid', gap: '1rem' }}>
+      <section
+        className="card"
+        style={{ padding: 'clamp(1.35rem, 4vw, 1.7rem)', display: 'grid', gap: '1rem' }}
+      >
         <header>
           <p className="section-title">Predictive scenarios</p>
-          <h2 style={{ margin: '0.35rem 0 0', fontSize: '1.4rem', fontWeight: 600 }}>{result.topFinding}</h2>
+          <h2 style={{ margin: '0.35rem 0 0', fontSize: 'clamp(1.2rem, 3.4vw, 1.4rem)', fontWeight: 600 }}>
+            {result.topFinding}
+          </h2>
         </header>
         <ProbabilityBars categories={result.scenarios.map((scenario) => ({
           label: scenario.label,
@@ -323,7 +334,7 @@ function Toggle({ value, onChange }: { value: boolean; onChange: (value: boolean
       style={{
         borderRadius: '999px',
         border: '1px solid var(--color-border)',
-        padding: '0.45rem 1rem',
+        padding: 'clamp(0.4rem, 2.1vw, 0.45rem) clamp(0.85rem, 3.4vw, 1rem)',
         fontWeight: 600,
         background: value ? 'var(--color-accent)' : 'var(--color-card)',
         color: value ? 'white' : 'var(--color-text-secondary)',
@@ -361,7 +372,7 @@ const inputStyle: CSSProperties = {
   padding: '0.75rem 1rem',
   borderRadius: '0.85rem',
   border: '1px solid var(--color-border)',
-  fontSize: '1rem',
+  fontSize: 'clamp(0.95rem, 2.6vw, 1rem)',
   background: 'rgba(234, 242, 255, 0.95)'
 };
 
@@ -373,7 +384,7 @@ const chipRowStyle: CSSProperties = {
 
 function chipStyle(active: boolean): CSSProperties {
   return {
-    padding: '0.5rem 1rem',
+    padding: 'clamp(0.45rem, 2.2vw, 0.5rem) clamp(0.85rem, 3.6vw, 1rem)',
     borderRadius: '999px',
     border: active ? '1px solid var(--color-accent)' : '1px solid var(--color-border)',
     background: active ? 'var(--color-accent-soft)' : 'rgba(226, 236, 255, 0.9)',
@@ -384,8 +395,8 @@ function chipStyle(active: boolean): CSSProperties {
 }
 
 const stepperButtonStyle: CSSProperties = {
-  width: '32px',
-  height: '32px',
+  width: 'clamp(28px, 7vw, 32px)',
+  height: 'clamp(28px, 7vw, 32px)',
   borderRadius: '50%',
   border: '1px solid var(--color-border)',
   background: 'var(--color-card)',

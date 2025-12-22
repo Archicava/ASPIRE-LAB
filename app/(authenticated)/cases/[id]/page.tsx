@@ -19,15 +19,7 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
   const job = record.jobId ? await loadInferenceJob(record.jobId) : undefined;
 
   return (
-    <main
-      style={{
-        maxWidth: '1040px',
-        margin: '0 auto',
-        padding: '0 1.5rem 5rem',
-        display: 'grid',
-        gap: '1.5rem'
-      }}
-    >
+    <main className="page-shell">
       <Hero title="Case Detail" />
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <Link href="/cases" style={{ color: 'var(--color-accent)', fontWeight: 600 }}>
@@ -47,9 +39,12 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
           Open predictive lab →
         </Link>
       </div>
-      <header className="card" style={{ padding: '1.8rem', display: 'grid', gap: '0.6rem' }}>
+      <header
+        className="card"
+        style={{ padding: 'clamp(1.4rem, 4.5vw, 1.8rem)', display: 'grid', gap: '0.6rem' }}
+      >
         <span className="pill">{record.demographics.subtype}</span>
-        <h1 style={{ margin: 0, fontSize: '1.9rem' }}>{record.demographics.caseLabel}</h1>
+        <h1 style={{ margin: 0, fontSize: 'clamp(1.5rem, 4vw, 1.9rem)' }}>{record.demographics.caseLabel}</h1>
         <p style={{ margin: 0, color: 'var(--color-text-secondary)', lineHeight: 1.65 }}>
           Submitted {formatDate(record.submittedAt)} · {record.demographics.ageMonths} months ·{' '}
           {record.demographics.sex}
@@ -58,10 +53,15 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
       </header>
 
       {job ? (
-        <section className="card" style={{ padding: '1.7rem', display: 'grid', gap: '1rem' }}>
+        <section
+          className="card"
+          style={{ padding: 'clamp(1.35rem, 4vw, 1.7rem)', display: 'grid', gap: '1rem' }}
+        >
           <header>
             <p className="section-title">Inference job</p>
-            <h2 style={{ margin: '0.35rem 0 0', fontSize: '1.3rem', fontWeight: 600 }}>Ratio1 execution details</h2>
+            <h2 style={{ margin: '0.35rem 0 0', fontSize: 'clamp(1.15rem, 3.4vw, 1.3rem)', fontWeight: 600 }}>
+              Ratio1 execution details
+            </h2>
           </header>
           <dl
             style={{
@@ -87,8 +87,8 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
               <dt style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: 'var(--color-text-secondary)' }}>
                 Payload CID
               </dt>
-              <dd style={{ margin: '0.2rem 0 0', fontWeight: 600 }}>
-                {job.payloadCid ? <code>{job.payloadCid}</code> : '—'}
+              <dd style={{ margin: '0.2rem 0 0', fontWeight: 600, overflowWrap: 'anywhere' }}>
+                {job.payloadCid ? <code style={{ wordBreak: 'break-all' }}>{job.payloadCid}</code> : '—'}
               </dd>
             </div>
             <div>
@@ -132,10 +132,13 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
       ) : null}
 
       <section className="grid-two" style={{ alignItems: 'start' }}>
-        <article className="card" style={{ padding: '1.7rem', display: 'grid', gap: '1rem' }}>
+        <article
+          className="card"
+          style={{ padding: 'clamp(1.35rem, 4vw, 1.7rem)', display: 'grid', gap: '1rem' }}
+        >
           <header>
             <p className="section-title">Inference outcome</p>
-            <h2 style={{ margin: '0.35rem 0 0', fontSize: '1.4rem', fontWeight: 600 }}>
+            <h2 style={{ margin: '0.35rem 0 0', fontSize: 'clamp(1.2rem, 3.4vw, 1.4rem)', fontWeight: 600 }}>
               {record.inference.topPrediction}
             </h2>
           </header>
@@ -144,7 +147,10 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
             {record.inference.explanation}
           </p>
         </article>
-        <article className="card" style={{ padding: '1.7rem', display: 'grid', gap: '0.75rem' }}>
+        <article
+          className="card"
+          style={{ padding: 'clamp(1.35rem, 4vw, 1.7rem)', display: 'grid', gap: '0.75rem' }}
+        >
           <p className="section-title">Recommended next steps</p>
           <ul style={{ margin: 0, paddingLeft: '1.2rem', display: 'grid', gap: '0.5rem' }}>
             {record.inference.recommendedActions.map((action) => (
@@ -156,10 +162,13 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
         </article>
       </section>
 
-      <section className="card" style={{ padding: '1.7rem', display: 'grid', gap: '1.4rem' }}>
+      <section
+        className="card"
+        style={{ padding: 'clamp(1.35rem, 4vw, 1.7rem)', display: 'grid', gap: '1.4rem' }}
+      >
         <header>
           <p className="section-title">Clinical profile</p>
-          <h2 style={{ margin: '0.35rem 0 0', fontSize: '1.35rem', fontWeight: 600 }}>
+          <h2 style={{ margin: '0.35rem 0 0', fontSize: 'clamp(1.15rem, 3.3vw, 1.35rem)', fontWeight: 600 }}>
             Data shared with Ratio1 Edge Node
           </h2>
         </header>
@@ -207,7 +216,7 @@ function DataList({ title, items }: { title: string; items: [string, string][] }
   return (
     <div
       style={{
-        padding: '1.1rem',
+        padding: 'clamp(0.95rem, 3.5vw, 1.1rem)',
         borderRadius: '1rem',
         border: '1px solid var(--color-border)',
         display: 'grid',
@@ -218,9 +227,9 @@ function DataList({ title, items }: { title: string; items: [string, string][] }
       <p style={{ margin: 0, fontWeight: 600 }}>{title}</p>
       <dl style={{ margin: 0, display: 'grid', gap: '0.4rem' }}>
         {items.map(([label, value]) => (
-          <div key={label} style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
+          <div key={label} className="data-item">
             <dt style={{ color: 'var(--color-text-secondary)' }}>{label}</dt>
-            <dd style={{ margin: 0, fontWeight: 600 }}>{value}</dd>
+            <dd className="data-value">{value}</dd>
           </div>
         ))}
       </dl>

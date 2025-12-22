@@ -15,15 +15,7 @@ export default async function PredictPage({ searchParams }: { searchParams?: { c
   }
 
   return (
-    <main
-      style={{
-        display: 'grid',
-        gap: '1.5rem',
-        maxWidth: '1040px',
-        margin: '0 auto',
-        padding: '0 1.5rem 5rem'
-      }}
-    >
+    <main className="page-shell">
       <Hero title="Predictive Lab" />
       <PredictiveLab cases={cases} seedCase={seedCase} />
     </main>

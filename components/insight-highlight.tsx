@@ -21,7 +21,7 @@ export function InsightHighlight() {
     <section
       className="card"
       style={{
-        padding: '1.5rem 1.75rem',
+        padding: 'clamp(1.2rem, 4.5vw, 1.5rem) clamp(1.3rem, 4.8vw, 1.75rem)',
         display: 'flex',
         flexDirection: 'column',
         gap: '1rem'
@@ -63,7 +63,7 @@ export function InsightHighlight() {
             <p
               style={{
                 margin: 0,
-                fontSize: '2rem',
+                fontSize: 'clamp(1.6rem, 5.5vw, 2rem)',
                 fontWeight: 700,
                 color: 'var(--color-accent)'
               }}

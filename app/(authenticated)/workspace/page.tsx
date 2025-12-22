@@ -49,15 +49,7 @@ export default async function WorkspacePage() {
     : 0;
 
   return (
-    <main
-      style={{
-        display: "grid",
-        gap: "1.5rem",
-        maxWidth: "1040px",
-        margin: "0 auto",
-        padding: "0 1.5rem 5rem",
-      }}
-    >
+    <main className="page-shell">
       <Hero title="Workspace" />
       <section
         style={{
@@ -118,14 +110,14 @@ export default async function WorkspacePage() {
       >
         <div
           className="card"
-          style={{ padding: "1.5rem", display: "grid", gap: "1rem" }}
+          style={{ padding: "clamp(1.2rem, 4vw, 1.5rem)", display: "grid", gap: "1rem" }}
         >
           <header>
             <p className="section-title">Protocol overview</p>
             <h2
               style={{
                 margin: "0.35rem 0 0",
-                fontSize: "1.4rem",
+                fontSize: "clamp(1.2rem, 3.4vw, 1.4rem)",
                 fontWeight: 600,
               }}
             >

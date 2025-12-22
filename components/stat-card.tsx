@@ -11,13 +11,13 @@ export function StatCard({ label, value, change, tone = 'neutral', caption }: St
     <article
       className="card"
       style={{
-        padding: '1.5rem',
+        padding: 'clamp(1.2rem, 4vw, 1.5rem)',
         display: 'grid',
         gap: '0.65rem'
       }}
     >
       <p className="section-title">{label}</p>
-      <p style={{ margin: 0, fontSize: '2.05rem', fontWeight: 700 }}>{value}</p>
+      <p style={{ margin: 0, fontSize: 'clamp(1.6rem, 5vw, 2.05rem)', fontWeight: 700 }}>{value}</p>
       {change ? (
         <span
           className="pill"

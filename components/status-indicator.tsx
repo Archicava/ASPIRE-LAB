@@ -17,10 +17,8 @@ export function StatusIndicator() {
       <button
         type="button"
         onClick={() => setModalOpen(true)}
+        className="status-indicator"
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.6rem',
           border: '1px solid var(--color-border)',
           background: 'var(--color-card)',
           padding: '0.45rem 0.75rem',

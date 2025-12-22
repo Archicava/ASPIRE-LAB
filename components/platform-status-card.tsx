@@ -23,14 +23,14 @@ export function PlatformStatusCard({ status }: PlatformStatusCardProps) {
     <section
       className="card"
       style={{
-        padding: '1.6rem',
+        padding: 'clamp(1.3rem, 4vw, 1.6rem)',
         display: 'grid',
         gap: '1.2rem'
       }}
     >
       <header>
         <p className="section-title">Edge node health</p>
-        <h2 style={{ margin: '0.35rem 0 0', fontSize: '1.35rem', fontWeight: 600 }}>
+        <h2 style={{ margin: '0.35rem 0 0', fontSize: 'clamp(1.15rem, 3.3vw, 1.35rem)', fontWeight: 600 }}>
           CStore &amp; R1FS signals
         </h2>
       </header>
@@ -45,7 +45,7 @@ export function PlatformStatusCard({ status }: PlatformStatusCardProps) {
           style={{
             borderRadius: '1rem',
             border: '1px solid var(--color-border)',
-            padding: '1.1rem',
+            padding: 'clamp(0.95rem, 3.4vw, 1.1rem)',
             background: 'linear-gradient(135deg, rgba(219, 232, 255, 0.85), rgba(236, 244, 255, 0.95))'
           }}
         >
@@ -59,7 +59,8 @@ export function PlatformStatusCard({ status }: PlatformStatusCardProps) {
             style={{
               margin: '0.6rem 0 0',
               color: 'var(--color-text-secondary)',
-              lineHeight: 1.5
+              lineHeight: 1.5,
+              overflowWrap: 'anywhere'
             }}
           >
             {formatValue(status.cstore)}
@@ -69,7 +70,7 @@ export function PlatformStatusCard({ status }: PlatformStatusCardProps) {
           style={{
             borderRadius: '1rem',
             border: '1px solid var(--color-border)',
-            padding: '1.1rem',
+            padding: 'clamp(0.95rem, 3.4vw, 1.1rem)',
             background: 'linear-gradient(135deg, rgba(219, 232, 255, 0.85), rgba(236, 244, 255, 0.95))'
           }}
         >
@@ -83,7 +84,8 @@ export function PlatformStatusCard({ status }: PlatformStatusCardProps) {
             style={{
               margin: '0.6rem 0 0',
               color: 'var(--color-text-secondary)',
-              lineHeight: 1.5
+              lineHeight: 1.5,
+              overflowWrap: 'anywhere'
             }}
           >
             {formatValue(status.r1fs)}

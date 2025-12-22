@@ -39,11 +39,24 @@ export function CaseList({
   const displayedCases = orderedCases.slice(startIndex, endIndex);
 
   return (
-    <section className="card" style={{ padding: '1.5rem', display: 'grid', gap: '1.1rem' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <section
+      className="card"
+      style={{ padding: 'clamp(1.2rem, 4vw, 1.5rem)', display: 'grid', gap: '1.1rem' }}
+    >
+      <header
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '0.75rem'
+        }}
+      >
         <div>
           <p className="section-title">Case library</p>
-          <h2 style={{ margin: '0.35rem 0 0', fontSize: '1.35rem', fontWeight: 600 }}>{title}</h2>
+          <h2 style={{ margin: '0.35rem 0 0', fontSize: 'clamp(1.15rem, 3.3vw, 1.35rem)', fontWeight: 600 }}>
+            {title}
+          </h2>
         </div>
         {showActions ? (
           <Link
@@ -63,7 +76,7 @@ export function CaseList({
           <article
             key={item.id}
             style={{
-              padding: '1.2rem 1.35rem',
+              padding: 'clamp(1rem, 3.6vw, 1.2rem) clamp(1.05rem, 3.8vw, 1.35rem)',
               borderRadius: '1rem',
               border: '1px solid var(--color-border)',
               background: 'linear-gradient(135deg, rgba(220, 233, 255, 0.82), rgba(240, 246, 255, 0.95))',
@@ -71,7 +84,15 @@ export function CaseList({
               gap: '0.35rem'
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: '0.6rem'
+              }}
+            >
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
                 <span
                   className="pill"
@@ -106,7 +127,9 @@ export function CaseList({
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginTop: '0.2rem'
+            marginTop: '0.2rem',
+            flexWrap: 'wrap',
+            gap: '0.75rem'
           }}
         >
           <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>

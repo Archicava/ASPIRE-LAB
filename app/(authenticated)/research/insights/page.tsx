@@ -62,19 +62,14 @@ export default function ResearchInsightsPage() {
   const stats = getCohortStats();
 
   return (
-    <main
-      style={{
-        display: 'grid',
-        gap: '1.5rem',
-        maxWidth: '1040px',
-        margin: '0 auto',
-        padding: '0 1.5rem 5rem'
-      }}
-    >
+    <main className="page-shell">
       <Hero title="Research" />
-      <section className="card" style={{ padding: '1.9rem', display: 'grid', gap: '1rem' }}>
+      <section
+        className="card"
+        style={{ padding: 'clamp(1.4rem, 4.5vw, 1.9rem)', display: 'grid', gap: '1rem' }}
+      >
         <span className="pill">Romanian ASD cohort synthesis</span>
-        <h1 style={{ margin: 0, fontSize: '1.9rem' }}>
+        <h1 style={{ margin: 0, fontSize: 'clamp(1.5rem, 4.2vw, 1.9rem)' }}>
           Translating clinical research into Ratio1 product decisions
         </h1>
         <p style={{ margin: 0, color: 'var(--color-text-secondary)', lineHeight: 1.65 }}>
@@ -84,11 +79,16 @@ export default function ResearchInsightsPage() {
         </p>
       </section>
 
-      <section className="card" style={{ padding: '1.6rem', display: 'grid', gap: '1rem' }}>
+      <section
+        className="card"
+        style={{ padding: 'clamp(1.3rem, 4vw, 1.6rem)', display: 'grid', gap: '1rem' }}
+      >
         <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
           <div>
             <p className="section-title">Cohort KPIs</p>
-            <h2 style={{ margin: '0.35rem 0 0', fontSize: '1.35rem', fontWeight: 600 }}>Clinical dataset at a glance</h2>
+            <h2 style={{ margin: '0.35rem 0 0', fontSize: 'clamp(1.15rem, 3.3vw, 1.35rem)', fontWeight: 600 }}>
+              Clinical dataset at a glance
+            </h2>
           </div>
           <span className="pill">{stats.totalCases} cases</span>
         </header>
@@ -105,10 +105,16 @@ export default function ResearchInsightsPage() {
       <InsightHighlight />
 
       {researchChapters.map((chapter) => (
-        <article key={chapter.title} className="card" style={{ padding: '1.6rem', display: 'grid', gap: '1rem' }}>
+        <article
+          key={chapter.title}
+          className="card"
+          style={{ padding: 'clamp(1.3rem, 4vw, 1.6rem)', display: 'grid', gap: '1rem' }}
+        >
           <header>
             <p className="section-title">Focus area</p>
-            <h2 style={{ margin: '0.35rem 0 0', fontSize: '1.4rem', fontWeight: 600 }}>{chapter.title}</h2>
+            <h2 style={{ margin: '0.35rem 0 0', fontSize: 'clamp(1.2rem, 3.4vw, 1.4rem)', fontWeight: 600 }}>
+              {chapter.title}
+            </h2>
           </header>
           <ul style={{ margin: 0, paddingLeft: '1.2rem', display: 'grid', gap: '0.6rem' }}>
             {chapter.takeaways.map((item) => (
@@ -120,10 +126,13 @@ export default function ResearchInsightsPage() {
         </article>
       ))}
 
-      <section className="card" style={{ padding: '1.6rem', display: 'grid', gap: '1rem' }}>
+      <section
+        className="card"
+        style={{ padding: 'clamp(1.3rem, 4vw, 1.6rem)', display: 'grid', gap: '1rem' }}
+      >
         <header>
           <p className="section-title">Research roadmap</p>
-          <h2 style={{ margin: '0.35rem 0 0', fontSize: '1.4rem', fontWeight: 600 }}>
+          <h2 style={{ margin: '0.35rem 0 0', fontSize: 'clamp(1.2rem, 3.4vw, 1.4rem)', fontWeight: 600 }}>
             Extending the Ratio1 ASD program
           </h2>
         </header>
@@ -137,7 +146,7 @@ export default function ResearchInsightsPage() {
             <div
               key={item.phase}
               style={{
-                padding: '1.1rem 1.3rem',
+                padding: 'clamp(0.95rem, 3.4vw, 1.1rem) clamp(1.1rem, 3.8vw, 1.3rem)',
                 borderRadius: '1rem',
                 border: '1px solid var(--color-border)',
                 background: 'linear-gradient(135deg, rgba(220, 233, 255, 0.82), rgba(240, 246, 255, 0.95))',
@@ -145,7 +154,7 @@ export default function ResearchInsightsPage() {
                 gap: '0.35rem'
               }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.6rem' }}>
                 <span className="pill" style={{ background: 'var(--color-accent-soft)' }}>
                   {item.phase}
                 </span>
@@ -169,15 +178,24 @@ function MetricCard({ label, value, description }: { label: string; value: strin
       style={{
         borderRadius: '1rem',
         border: '1px solid var(--color-border)',
-        padding: '1.1rem',
+        padding: 'clamp(0.95rem, 3.4vw, 1.1rem)',
         background: 'linear-gradient(135deg, rgba(220, 233, 255, 0.82), rgba(240, 246, 255, 0.95))',
         display: 'grid',
         gap: '0.4rem'
       }}
     >
       <p className="section-title" style={{ fontSize: '0.8rem' }}>{label}</p>
-      <p style={{ margin: 0, fontSize: '1.5rem', fontWeight: 700 }}>{value}</p>
-      <p style={{ margin: 0, color: 'var(--color-text-secondary)', fontSize: '0.9rem', lineHeight: 1.45 }}>{description}</p>
+      <p style={{ margin: 0, fontSize: 'clamp(1.2rem, 3.8vw, 1.5rem)', fontWeight: 700 }}>{value}</p>
+      <p
+        style={{
+          margin: 0,
+          color: 'var(--color-text-secondary)',
+          fontSize: 'clamp(0.85rem, 2.4vw, 0.9rem)',
+          lineHeight: 1.45
+        }}
+      >
+        {description}
+      </p>
     </div>
   );
 }

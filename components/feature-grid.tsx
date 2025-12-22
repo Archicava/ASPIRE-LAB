@@ -16,7 +16,7 @@ export function FeatureGrid({ features }: FeatureGridProps) {
           key={feature.title}
           className="card"
           style={{
-            padding: '1.75rem',
+            padding: 'clamp(1.35rem, 4.5vw, 1.75rem)',
             display: 'flex',
             flexDirection: 'column',
             gap: '1.1rem'
@@ -29,7 +29,7 @@ export function FeatureGrid({ features }: FeatureGridProps) {
             <h3
               style={{
                 margin: '0 0 0.75rem',
-                fontSize: '1.25rem',
+                fontSize: 'clamp(1.1rem, 3.2vw, 1.25rem)',
                 fontWeight: 600,
                 letterSpacing: '-0.01em'
               }}
@@ -45,4 +45,3 @@ export function FeatureGrid({ features }: FeatureGridProps) {
     </div>
   );
 }
-

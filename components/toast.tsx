@@ -33,20 +33,12 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
       {children}
       <aside
         aria-live="assertive"
-        style={{
-          position: 'fixed',
-          top: '1.5rem',
-          right: '1.5rem',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '0.75rem',
-          zIndex: 1000
-        }}
+        className="toast-stack"
       >
         {toasts.map((toast) => (
           <div
             key={toast.id}
-            className="card fade-in"
+            className="card fade-in toast-card"
             style={{
               padding: '0.9rem 1.1rem',
               borderLeft: `5px solid ${resolveColor(toast.tone)}`
@@ -83,4 +75,3 @@ export function useToast() {
   }
   return context;
 }
-

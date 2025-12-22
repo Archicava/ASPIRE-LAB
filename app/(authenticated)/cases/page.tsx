@@ -9,27 +9,21 @@ export default async function CasesPage() {
   const aggregatedCategories = aggregateCategories(cases);
 
   return (
-    <main
-      style={{
-        display: 'grid',
-        gap: '1.5rem',
-        maxWidth: '1040px',
-        margin: '0 auto',
-        padding: '0 1.5rem 5rem'
-      }}
-    >
+    <main className="page-shell">
       <Hero title="Case Library" />
       <section
         className="card"
         style={{
-          padding: '1.7rem',
+          padding: 'clamp(1.35rem, 4vw, 1.7rem)',
           display: 'grid',
           gap: '1.2rem'
         }}
       >
         <header>
           <span className="pill">Cohort distribution</span>
-          <h1 style={{ margin: '0.7rem 0 0', fontSize: '1.6rem' }}>Inference phenotype mix</h1>
+          <h1 style={{ margin: '0.7rem 0 0', fontSize: 'clamp(1.35rem, 3.8vw, 1.6rem)' }}>
+            Inference phenotype mix
+          </h1>
           <p style={{ margin: '0.35rem 0 0', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
             Each case routes through a multinomial classifier; probabilities shown are averaged across the
             stored cohort. Use this view to monitor the balance between profound ASD, high-functioning,

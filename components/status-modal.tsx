@@ -34,21 +34,21 @@ export function StatusModal({ open, onClose }: StatusModalProps) {
           width: 'min(640px, 92vw)',
           maxHeight: '80vh',
           overflowY: 'auto',
-          padding: '1.8rem',
+          padding: 'clamp(1.3rem, 4.5vw, 1.8rem)',
           display: 'grid',
           gap: '1.25rem',
           position: 'relative'
         }}
         onClick={(event) => event.stopPropagation()}
       >
-        <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <header className="status-modal-header">
           <div>
             <p className="section-title">Ratio1 Edge Node telemetry</p>
-            <h2 style={{ margin: '0.35rem 0 0', fontSize: '1.4rem', fontWeight: 600 }}>
+            <h2 style={{ margin: '0.35rem 0 0', fontSize: 'clamp(1.2rem, 3.5vw, 1.4rem)', fontWeight: 600 }}>
               Live service diagnostics
             </h2>
           </div>
-          <div style={{ display: 'flex', gap: '0.6rem' }}>
+          <div className="status-modal-actions">
             <button
               type="button"
               onClick={() => refresh().catch(() => undefined)}
@@ -119,7 +119,15 @@ function StatusPanel({ title, status }: { title: string; status: Record<string, 
         background: 'linear-gradient(135deg, rgba(219, 232, 255, 0.88), rgba(237, 244, 255, 0.95))'
       }}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '0.6rem'
+        }}
+      >
         <h3 style={{ margin: 0 }}>{title}</h3>
         <span
           className="pill"

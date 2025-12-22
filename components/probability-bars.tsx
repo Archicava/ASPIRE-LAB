@@ -10,7 +10,15 @@ export function ProbabilityBars({ categories }: ProbabilityBarsProps) {
     <div style={{ display: 'grid', gap: '0.75rem' }}>
       {categories.map((category) => (
         <div key={category.label} style={{ display: 'grid', gap: '0.35rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+              flexWrap: 'wrap',
+              gap: '0.35rem'
+            }}
+          >
             <span style={{ fontWeight: 600 }}>{category.label}</span>
             <span style={{ color: 'var(--color-text-secondary)', fontWeight: 600 }}>
               {formatProbability(category.probability)}
@@ -44,4 +52,3 @@ export function ProbabilityBars({ categories }: ProbabilityBarsProps) {
     </div>
   );
 }
-
