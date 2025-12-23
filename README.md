@@ -29,8 +29,12 @@ Then open http://localhost:3000 to explore the prototype. By default the app boo
 - `EE_CHAINSTORE_API_URL` / `EE_R1FS_API_URL` – CStore and R1FS endpoints exposed by the edge node container. Presence of both automatically disables mock mode.
 - `EE_CHAINSTORE_PEERS` – optional JSON array of peer URLs passed to the Ratio1 SDK.
 - `EE_CSTORE_AUTH_HKEY` / `EE_CSTORE_AUTH_SECRET` – credentials consumed by `@ratio1/cstore-auth-ts` to authenticate operators against CStore.
+- `EE_CSTORE_BOOTSTRAP_ADMIN_PASS` – one-time bootstrap password for the initial `admin` user (required until that account exists).
+- `AUTH_SESSION_SECRET` – server-side secret for signing auth sessions (required in production; use 32+ chars).
 - `AUTH_SESSION_COOKIE` / `AUTH_SESSION_TTL_SECONDS` – optional overrides for the session cookie name and lifespan (defaults: `r1-session`, 86400 seconds).
 - `RATIO1_CASES_HKEY` / `RATIO1_JOBS_HKEY` – hash keys used when persisting case records and inference jobs into CStore (defaults align with the ASD prototype namespace).
+
+Protected routes and API endpoints require a signed session cookie issued by `/api/auth/login`.
 
 Run `npm run seed:cohort` to regenerate the JSON seeds (`data/cohort-seed.json`, `data/cohort-cstore.json`) from the Excel workbook when the source dataset is updated.
 
