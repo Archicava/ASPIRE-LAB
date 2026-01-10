@@ -28,7 +28,7 @@ Update rules:
 ## Env Vars
 - `NEXT_PUBLIC_RATIO1_USE_MOCKS` / `RATIO1_USE_MOCKS` toggle mock mode.
 - `EE_CHAINSTORE_API_URL` / `EE_R1FS_API_URL` set endpoints; `EE_CHAINSTORE_PEERS` optional.
-- `EE_CSTORE_AUTH_HKEY`, `EE_CSTORE_AUTH_SECRET`, `EE_CSTORE_BOOTSTRAP_ADMIN_PASS` for CStore auth.
+- `R1EN_CSTORE_AUTH_HKEY`, `R1EN_CSTORE_AUTH_SECRET`, `R1EN_CSTORE_AUTH_BOOTSTRAP_ADMIN_PWD` (legacy: `EE_CSTORE_AUTH_HKEY`, `EE_CSTORE_AUTH_SECRET`, `EE_CSTORE_AUTH_BOOTSTRAP_ADMIN_PW`) for CStore auth.
 - `ADMIN_USERNAME` / `ADMIN_PASSWORD` (or `RATIO1_ADMIN_USERNAME` / `RATIO1_ADMIN_PASSWORD`) override mock admin credentials.
 - `AUTH_SESSION_SECRET` is required in production for signed sessions.
 - `AUTH_SESSION_COOKIE`, `AUTH_SESSION_TTL_SECONDS` override session cookie settings.
@@ -38,6 +38,10 @@ Update rules:
 - 2025-12-23: Added signed session cookies, server-side auth checks, and updated docs/login copy.
 - 2026-01-10: Added mock user store, local session cache, and admin user provisioning UI/API.
 - 2026-01-10: Fixed admin page error handling type guard to unblock Next.js build.
+- 2026-01-10: Added `.env.example` with documented environment variables.
+- 2026-01-10: Reviewed upstream `cstore-auth-ts` implementation for integration risks.
+- 2026-01-10: Corrected CStore auth bootstrap env var names in docs and `.env.example`.
+- 2026-01-10: Switched `.env.example` defaults to disable mock mode.
 
 ## Open Questions
 - Should live mode user provisioning call Ratio1 CStore (`simple.createUser`) or remain mock-only?

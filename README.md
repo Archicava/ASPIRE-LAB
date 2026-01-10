@@ -29,8 +29,8 @@ Then open http://localhost:3000 to explore the prototype. By default the app boo
 - `RATIO1_USE_MOCKS` (or `NEXT_PUBLIC_RATIO1_USE_MOCKS`) – set to `false` when deploying alongside a Ratio1 Edge Node to force live endpoints.
 - `EE_CHAINSTORE_API_URL` / `EE_R1FS_API_URL` – CStore and R1FS endpoints exposed by the edge node container. Presence of both automatically disables mock mode.
 - `EE_CHAINSTORE_PEERS` – optional JSON array of peer URLs passed to the Ratio1 SDK.
-- `EE_CSTORE_AUTH_HKEY` / `EE_CSTORE_AUTH_SECRET` – credentials consumed by `@ratio1/cstore-auth-ts` to authenticate operators against CStore.
-- `EE_CSTORE_BOOTSTRAP_ADMIN_PASS` – one-time bootstrap password for the initial `admin` user (required until that account exists).
+- `R1EN_CSTORE_AUTH_HKEY` / `R1EN_CSTORE_AUTH_SECRET` (or `EE_CSTORE_AUTH_HKEY` / `EE_CSTORE_AUTH_SECRET`, or `CSTORE_AUTH_HKEY` / `CSTORE_AUTH_SECRET`) – credentials consumed by `@ratio1/cstore-auth-ts` to authenticate operators against CStore.
+- `R1EN_CSTORE_AUTH_BOOTSTRAP_ADMIN_PWD` (or legacy `EE_CSTORE_AUTH_BOOTSTRAP_ADMIN_PW`) – one-time bootstrap password for the initial `admin` user (required until that account exists).
 - `AUTH_SESSION_SECRET` – server-side secret for signing auth sessions (required in production; use 32+ chars).
 - `AUTH_SESSION_COOKIE` / `AUTH_SESSION_TTL_SECONDS` – optional overrides for the session cookie name and lifespan (defaults: `r1-session`, 86400 seconds).
 - `RATIO1_CASES_HKEY` / `RATIO1_JOBS_HKEY` – hash keys used when persisting case records and inference jobs into CStore (defaults align with the ASD prototype namespace).
