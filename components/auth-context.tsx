@@ -11,102 +11,108 @@ type User = {
 
 type AuthContextValue = {
   user: User | null;
+  token: string | null;
+  loading: boolean;
+  error: string | null;
   login: (payload: { username: string; password: string }) => Promise<void>;
   logout: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+const SESSION_STORAGE_KEY = 'aspire-session';
+
+type StoredSession = { user: User; token: string };
+
+function readSession(): StoredSession | null {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  try {
+    const raw = window.localStorage.getItem(SESSION_STORAGE_KEY);
+    return raw ? (JSON.parse(raw) as StoredSession) : null;
+  } catch (_error) {
+    return null;
+  }
+}
+
+function persistSession(session: StoredSession | null): void {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  try {
+    if (session) {
+      window.localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(session));
+    } else {
+      window.localStorage.removeItem(SESSION_STORAGE_KEY);
+    }
+  } catch (_error) {
+    // Ignore persistence errors in constrained environments.
+  }
+}
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    let cancelled = false;
-
-    async function loadSession() {
-      if (typeof window === 'undefined') {
-        return;
-      }
-
-      try {
-        const response = await fetch('/api/auth/session', {
-          method: 'GET',
-          credentials: 'include'
-        });
-
-        if (!response.ok) {
-          if (!cancelled) {
-            setUser(null);
-          }
-          return;
-        }
-
-        const data = (await response.json()) as {
-          authenticated: boolean;
-          user?: { username: string; role?: string; metadata?: Record<string, unknown> };
-        };
-
-        if (!cancelled && data.authenticated && data.user) {
-          const metadata = data.user.metadata ?? {};
-          const displayName =
-            typeof metadata.displayName === 'string'
-              ? metadata.displayName
-              : typeof metadata.fullName === 'string'
-                ? metadata.fullName
-                : data.user.username;
-
-          setUser({
-            username: data.user.username,
-            role: data.user.role,
-            displayName,
-            metadata
-          });
-        }
-      } catch (error) {
-        console.warn('[auth] Failed to load session', error);
-        if (!cancelled) {
-          setUser(null);
-        }
-      }
+    const session = readSession();
+    if (session) {
+      setUser(session.user);
+      setToken(session.token);
     }
-
-    void loadSession();
-
-    return () => {
-      cancelled = true;
-    };
+    setLoading(false);
   }, []);
 
   const login = useCallback(async ({ username, password }: { username: string; password: string }) => {
-    const response = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({ username, password })
-    });
+    setLoading(true);
+    setError(null);
 
-    const data = await response.json();
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ username, password })
+      });
 
-    if (!response.ok) {
-      const error = typeof data?.error === 'string' ? data.error : 'Unable to authenticate';
-      throw new Error(error);
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok || !data) {
+        const message = typeof data?.error === 'string' ? data.error : 'Unable to authenticate';
+        throw new Error(message);
+      }
+
+      const userData = data.user as { username: string; role?: string; metadata?: Record<string, unknown> };
+      const metadata = userData.metadata ?? {};
+      const displayName =
+        typeof metadata.displayName === 'string'
+          ? metadata.displayName
+          : typeof metadata.fullName === 'string'
+            ? metadata.fullName
+            : userData.username;
+
+      const nextUser = {
+        username: userData.username,
+        role: userData.role,
+        displayName,
+        metadata
+      };
+      const nextToken = typeof data.token === 'string' ? data.token : 'local-session';
+
+      setUser(nextUser);
+      setToken(nextToken);
+      persistSession({ user: nextUser, token: nextToken });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Unable to authenticate';
+      setError(message);
+      throw err;
+    } finally {
+      setLoading(false);
     }
-
-    const userData = data.user as { username: string; role?: string; metadata?: Record<string, unknown> };
-    const metadata = userData.metadata ?? {};
-    const displayName =
-      typeof metadata.displayName === 'string'
-        ? metadata.displayName
-        : typeof metadata.fullName === 'string'
-          ? metadata.fullName
-          : userData.username;
-
-    setUser({
-      username: userData.username,
-      role: userData.role,
-      displayName,
-      metadata
-    });
   }, []);
 
   const logout = useCallback(async () => {
@@ -117,10 +123,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
     } finally {
       setUser(null);
+      setToken(null);
+      setError(null);
+      persistSession(null);
     }
   }, []);
 
-  const value = useMemo<AuthContextValue>(() => ({ user, login, logout }), [user, login, logout]);
+  const value = useMemo<AuthContextValue>(
+    () => ({ user, token, loading, error, login, logout }),
+    [user, token, loading, error, login, logout]
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

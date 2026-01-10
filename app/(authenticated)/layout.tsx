@@ -8,16 +8,16 @@ import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 
 export default function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!user) {
+    if (!loading && !user) {
       router.replace('/login');
     }
-  }, [router, user]);
+  }, [router, user, loading]);
 
-  if (!user) {
+  if (loading || !user) {
     return null;
   }
 

@@ -17,6 +17,8 @@ export function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isAdmin = user?.role === 'admin';
+  const links = isAdmin ? [...navLinks, { href: '/admin', label: 'Admin' }] : navLinks;
 
   useEffect(() => {
     setIsMenuOpen(false);
@@ -60,7 +62,7 @@ export function Navbar() {
       <div className="nav-menu" id="nav-menu">
         <div className="nav-links">
           <div className="nav-divider" aria-hidden="true" />
-          {navLinks.map((link) => {
+          {links.map((link) => {
             const isActive = pathname === link.href;
             return (
               <Link

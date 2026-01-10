@@ -4,11 +4,13 @@ import { InvalidCredentialsError, type PublicUser } from '@ratio1/cstore-auth-ts
 import { ensureAuthInitialized, getAuthClient } from '@/lib/auth/cstore';
 import { createSessionCookie } from '@/lib/auth/session';
 import { platformConfig } from '@/lib/config';
+import { authenticateMockUser } from '@/lib/mock-users';
 
 type AuthenticatedUser = PublicUser<Record<string, unknown>>;
 
 type SuccessPayload = {
   success: true;
+  token: string;
   user: {
     username: string;
     role?: string;
@@ -23,21 +25,7 @@ type ErrorPayload = {
 
 async function authenticate(username: string, password: string): Promise<AuthenticatedUser> {
   if (platformConfig.useMocks) {
-    const demoUsername = platformConfig.demoCredentials.username.trim();
-    const demoPassword = platformConfig.demoCredentials.password.trim();
-
-    if (username === demoUsername && password === demoPassword) {
-      return {
-        username: demoUsername,
-        role: 'operator',
-        type: 'simple',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        metadata: { displayName: 'Demo Clinician' }
-      } as unknown as AuthenticatedUser;
-    }
-
-    throw new InvalidCredentialsError();
+    return authenticateMockUser(username, password) as unknown as AuthenticatedUser;
   }
 
   const client = getAuthClient();
@@ -75,9 +63,11 @@ export async function POST(request: Request) {
 
   try {
     const user = await authenticate(trimmedUsername, trimmedPassword);
+    const token = crypto.randomUUID();
 
     const response = NextResponse.json<SuccessPayload>({
       success: true,
+      token,
       user: {
         username: user.username,
         role: user.role,

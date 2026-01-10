@@ -25,6 +25,7 @@ Then open http://localhost:3000 to explore the prototype. By default the app boo
 ### Configuration
 
 - `NEXT_PUBLIC_RATIO1_DEMO_USERNAME` / `NEXT_PUBLIC_RATIO1_DEMO_PASSWORD` – override the default `demo/demo` login for the mock experience.
+- `ADMIN_USERNAME` / `ADMIN_PASSWORD` (or `RATIO1_ADMIN_USERNAME` / `RATIO1_ADMIN_PASSWORD`) – override the mock admin credentials (defaults: `admin/admin123`).
 - `RATIO1_USE_MOCKS` (or `NEXT_PUBLIC_RATIO1_USE_MOCKS`) – set to `false` when deploying alongside a Ratio1 Edge Node to force live endpoints.
 - `EE_CHAINSTORE_API_URL` / `EE_R1FS_API_URL` – CStore and R1FS endpoints exposed by the edge node container. Presence of both automatically disables mock mode.
 - `EE_CHAINSTORE_PEERS` – optional JSON array of peer URLs passed to the Ratio1 SDK.
@@ -70,7 +71,7 @@ Use this app as the frontend companion to future Ratio1 service integrations or 
 
 ## Mock mode vs. Ratio1 Edge Node deployment
 
-- **Mock mode (default when endpoints are absent):** Case submissions are held in-memory via `lib/mock-store.ts`, inference jobs are synthesised, and status cards display illustrative data. The UI enforces the `demo/demo` operator credentials.
+- **Mock mode (default when endpoints are absent):** Case submissions are held in-memory via `lib/mock-store.ts`, inference jobs are synthesised, and status cards display illustrative data. The UI is seeded with `demo/demo` plus `admin/admin123` credentials, and admins can add additional mock users.
 - **Edge Node mode:** Server routes (`app/api/cases`) and data loaders swap to live CStore/R1FS operations. Submissions are stored via `cstore.hset` and jobs recorded under the configured hash keys, mirroring the patterns in [`ratio1-drive`](https://github.com/Ratio1/ratio1-drive). Workspace health cards display the direct `getStatus` responses from the Ratio1 services.
 
 ## Predictive lab

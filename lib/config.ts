@@ -77,6 +77,8 @@ const parsedSessionTtl = parseInt(process.env.AUTH_SESSION_TTL_SECONDS || '86400
 const authSessionTtlSeconds = Number.isFinite(parsedSessionTtl) ? parsedSessionTtl : 86400;
 const cstoreAuthHkey = process.env.EE_CSTORE_AUTH_HKEY || process.env.CSTORE_AUTH_HKEY;
 const cstoreAuthSecret = process.env.EE_CSTORE_AUTH_SECRET || process.env.CSTORE_AUTH_SECRET;
+const adminUsername = process.env.ADMIN_USERNAME || process.env.RATIO1_ADMIN_USERNAME || 'admin';
+const adminPassword = process.env.ADMIN_PASSWORD || process.env.RATIO1_ADMIN_PASSWORD || 'admin123';
 
 export const platformConfig = {
   DEBUG: rawDebug,
@@ -89,6 +91,10 @@ export const platformConfig = {
   demoCredentials: {
     username: process.env.RATIO1_DEMO_USERNAME || 'demo',
     password: process.env.RATIO1_DEMO_PASSWORD || 'demo'
+  },
+  adminCredentials: {
+    username: adminUsername,
+    password: adminPassword
   },
   auth: {
     sessionCookieName: authSessionCookieName,
