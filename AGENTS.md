@@ -40,3 +40,6 @@ Update rules:
 - 2026-01-10: Removed demo env vars from `.env`.
 - 2026-01-10: Removed mock-mode code paths and configuration.
 - 2026-01-10: Updated login button label to remove dAuth mention.
+- 2026-01-10: Added live admin user management page and `/api/users` endpoints.
+- 2026-01-10: Added admin password-change form on the user management page.
+- 2026-01-10: Added account page for self-service password changes and linked it in the nav.

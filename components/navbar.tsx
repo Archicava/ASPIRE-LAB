@@ -9,7 +9,8 @@ import { useAuth } from '@/components/auth-context';
 const navLinks = [
   { href: '/predict', label: 'Predictive Lab' },
   { href: '/cases', label: 'Case Library' },
-  { href: '/research/insights', label: 'Research' }
+  { href: '/research/insights', label: 'Research' },
+  { href: '/account', label: 'Account' }
 ];
 
 export function Navbar() {
@@ -17,7 +18,8 @@ export function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const links = navLinks;
+  const isAdmin = user?.role === 'admin';
+  const links = isAdmin ? [...navLinks, { href: '/admin', label: 'Admin' }] : navLinks;
 
   useEffect(() => {
     setIsMenuOpen(false);
