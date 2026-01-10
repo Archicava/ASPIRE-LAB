@@ -7,10 +7,6 @@ import { z } from 'zod';
 import { useToast } from '@/components/toast';
 import type { CaseRecord, CaseSubmission } from '@/lib/types';
 
-type CaseFormProps = {
-  useMocks?: boolean;
-};
-
 const prenatalOptions = ['Natural', 'IVF', 'Twin', 'Complication'] as const;
 const delayOptions = ['None', 'Motor', 'Language', 'Cognitive', 'Global'] as const;
 const concernOptions = [
@@ -78,7 +74,7 @@ const defaults: FormValues = {
   notes: ''
 };
 
-export function CaseForm({ useMocks = true }: CaseFormProps) {
+export function CaseForm() {
   const [values, setValues] = useState<FormValues>(defaults);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -151,9 +147,7 @@ export function CaseForm({ useMocks = true }: CaseFormProps) {
 
       toast.show({
         title: 'Case staged for inference',
-        description: useMocks
-          ? 'Stored locally in mock mode; inference result generated for prototyping.'
-          : 'Submission persisted to Ratio1 CStore; awaiting edge node inference.',
+        description: 'Submission persisted to Ratio1 CStore; awaiting edge node inference.',
         tone: 'success'
       });
 

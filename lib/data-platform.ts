@@ -3,7 +3,6 @@ import { Buffer } from 'node:buffer';
 import { platformConfig } from '@/lib/config';
 import { getCohortCaseRecords } from '@/lib/cohort-data';
 import { CaseRecord, CaseSubmission, InferenceJob, InferenceJobStatus, InferenceResult } from '@/lib/types';
-import { addMockCase, addMockJob, findMockCase, listMockCases, listMockJobs } from '@/lib/mock-store';
 import { getRatio1NodeClient } from '@/lib/ratio1-client';
 
 type ParsedHash<T> = {
@@ -66,10 +65,6 @@ function parseHashPayload<T>(payload: unknown): ParsedHash<T> {
 }
 
 export async function loadCaseRecords(): Promise<CaseRecord[]> {
-  if (platformConfig.useMocks) {
-    return listMockCases();
-  }
-
   const client = getRatio1NodeClient();
   const response = await client.cstore.hgetall({ hkey: platformConfig.casesHKey });
 
@@ -86,10 +81,6 @@ export function loadCohortSeedCases(limit?: number): CaseRecord[] {
 }
 
 export async function loadCaseRecord(caseId: string): Promise<CaseRecord | undefined> {
-  if (platformConfig.useMocks) {
-    return findMockCase(caseId);
-  }
-
   const client = getRatio1NodeClient();
   const response = await client.cstore.hget({ hkey: platformConfig.casesHKey, key: caseId });
 
@@ -115,10 +106,6 @@ export async function loadCaseRecord(caseId: string): Promise<CaseRecord | undef
 }
 
 export async function loadInferenceJobs(): Promise<InferenceJob[]> {
-  if (platformConfig.useMocks) {
-    return listMockJobs();
-  }
-
   const client = getRatio1NodeClient();
   const response = await client.cstore.hgetall({ hkey: platformConfig.jobsHKey });
 
@@ -127,10 +114,6 @@ export async function loadInferenceJobs(): Promise<InferenceJob[]> {
 }
 
 export async function loadInferenceJob(jobId: string): Promise<InferenceJob | undefined> {
-  if (platformConfig.useMocks) {
-    return listMockJobs().find((job) => job.id === jobId);
-  }
-
   const client = getRatio1NodeClient();
   const response = await client.cstore.hget({ hkey: platformConfig.jobsHKey, key: jobId });
 
@@ -158,23 +141,6 @@ export async function loadPlatformStatus(): Promise<{
   cstore?: Record<string, unknown>;
   r1fs?: Record<string, unknown>;
 }> {
-  if (platformConfig.useMocks) {
-    const now = new Date().toISOString();
-    return {
-      cstore: {
-        ee_node_address: 'mock-cstore-node',
-        last_sync: now,
-        peer_count: 3,
-        status: 'healthy'
-      },
-      r1fs: {
-        ee_node_address: 'mock-r1fs-node',
-        status: 'healthy',
-        storage_used: '12.5GB'
-      }
-    };
-  }
-
   const client = getRatio1NodeClient();
   const [cstoreStatus, r1fsStatus] = await Promise.all([
     client.cstore.getStatus(),
@@ -215,10 +181,6 @@ export async function storeCaseSubmission(
     artifacts: {}
   };
 
-  if (platformConfig.useMocks) {
-    return storeCaseInMockMode(record, timestamp);
-  }
-
   return storeCaseInLiveMode(record, submission, timestamp);
 }
 
@@ -235,25 +197,6 @@ function createJobId(timestamp: Date) {
 
 function createStatusHistory(status: InferenceJobStatus, timestamp: Date) {
   return [{ status, timestamp: timestamp.toISOString() }];
-}
-
-function storeCaseInMockMode(record: CaseRecord, timestamp: Date): CaseRecord {
-  const payloadCid = `mock-${record.id.toLowerCase()}`;
-  record.artifacts = { payloadCid };
-
-  addMockCase(record);
-
-  addMockJob({
-    id: record.jobId ?? `JOB-${timestamp.getTime()}`,
-    caseId: record.id,
-    status: 'queued',
-    submittedAt: timestamp.toISOString(),
-    edgeNode: 'mock-edge-node',
-    payloadCid,
-    statusHistory: createStatusHistory('queued', timestamp)
-  });
-
-  return record;
 }
 
 async function storeCaseInLiveMode(

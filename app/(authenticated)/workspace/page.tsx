@@ -8,8 +8,6 @@ import {
   loadInferenceJobs,
   loadPlatformStatus,
 } from "@/lib/data-platform";
-import { platformConfig } from "@/lib/config";
-import { getCohortStats } from "@/lib/cohort-data";
 import { Hero } from "@/components/hero";
 
 export default async function WorkspacePage() {
@@ -19,27 +17,18 @@ export default async function WorkspacePage() {
     loadPlatformStatus(),
   ]);
 
-  const cohortStats = platformConfig.useMocks ? getCohortStats() : null;
-
-  const activeCases = cohortStats ? cohortStats.totalCases : cases.length;
-  const eegPositiveRate = cohortStats
-    ? cohortStats.eegAnomalyRate
-    : activeCases
+  const activeCases = cases.length;
+  const eegPositiveRate = activeCases
     ? Math.round(
         (cases.filter((item) => item.assessments.eegAnomalies).length /
           activeCases) *
           100
       )
     : 0;
-  const medianDiagnosticAge =
-    cohortStats?.diagnosisAge.median ??
-    calculateMedian(cases.map((item) => item.demographics.diagnosticAgeMonths));
-  const minimallyVerbalBaseline = cohortStats
-    ? Math.round((cohortStats.language.absent / cohortStats.totalCases) * 100)
-    : 26;
-  const minimallyVerbal = cohortStats
-    ? minimallyVerbalBaseline
-    : activeCases
+  const medianDiagnosticAge = calculateMedian(
+    cases.map((item) => item.demographics.diagnosticAgeMonths)
+  );
+  const minimallyVerbal = activeCases
     ? Math.round(
         (cases.filter((item) => item.behaviors.languageLevel === "Absent")
           .length /
@@ -61,41 +50,33 @@ export default async function WorkspacePage() {
         <StatCard
           label="Active cohort cases"
           value={`${activeCases}`}
-          change={cohortStats ? "ASD cohort dataset" : "+3 new this quarter"}
+          change="Live CStore cohort"
           tone="up"
           caption={
-            cohortStats
-              ? "Full Romanian ASD cohort imported from baza de date pacienți."
-              : "Curated submissions synced from Ratio1 namespace ASD-RO-01."
+            "Curated submissions synced from Ratio1 namespace ASD-RO-01."
           }
         />
         <StatCard
           label="EEG anomaly prevalence"
           value={`${eegPositiveRate}%`}
           caption={
-            cohortStats
-              ? "Derived directly from EEG metrics in the ASD cohort spreadsheet."
-              : "Aligns with 2x uplift over general pediatric baseline reported in cohort literature."
+            "Derived from submitted EEG anomaly flags in the live cohort."
           }
         />
         <StatCard
           label="Median diagnostic age"
           value={`${medianDiagnosticAge} months`}
           caption={
-            cohortStats
-              ? "Median diagnosis age computed across all 315 cohort records."
-              : "Group 1 early detection cluster maintained via milestone tracking."
+            "Median diagnosis age across submitted live cases."
           }
         />
         <StatCard
           label="Minimally verbal cohort"
           value={`${minimallyVerbal}%`}
-          change={cohortStats ? "Dataset baseline" : "26% in source dataset"}
+          change="Live baseline"
           tone="neutral"
           caption={
-            cohortStats
-              ? "Language profile benchmarked from the Romanian cohort dataset."
-              : "Use communication profiles to tailor AAC recommendations."
+            "Use communication profiles to tailor AAC recommendations."
           }
         />
       </section>

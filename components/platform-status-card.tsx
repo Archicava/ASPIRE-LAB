@@ -93,8 +93,7 @@ export function PlatformStatusCard({ status }: PlatformStatusCardProps) {
         </article>
       </div>
       <p style={{ margin: 0, color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>
-        In production the values surface live signals from the Ratio1 Edge Node endpoints. In mock
-        mode, synthetic values illustrate the expected structure.
+        Values surface live signals from the Ratio1 Edge Node endpoints.
       </p>
     </section>
   );

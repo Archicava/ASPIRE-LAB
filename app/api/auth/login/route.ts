@@ -3,8 +3,6 @@ import { InvalidCredentialsError, type PublicUser } from '@ratio1/cstore-auth-ts
 
 import { ensureAuthInitialized, getAuthClient } from '@/lib/auth/cstore';
 import { createSessionCookie } from '@/lib/auth/session';
-import { platformConfig } from '@/lib/config';
-import { authenticateMockUser } from '@/lib/mock-users';
 
 type AuthenticatedUser = PublicUser<Record<string, unknown>>;
 
@@ -24,10 +22,6 @@ type ErrorPayload = {
 };
 
 async function authenticate(username: string, password: string): Promise<AuthenticatedUser> {
-  if (platformConfig.useMocks) {
-    return authenticateMockUser(username, password) as unknown as AuthenticatedUser;
-  }
-
   const client = getAuthClient();
 
   await ensureAuthInitialized(client);

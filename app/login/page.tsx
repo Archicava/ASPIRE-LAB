@@ -6,9 +6,6 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/auth-context';
 import { useToast } from '@/components/toast';
 
-const DEMO_USERNAME = process.env.NEXT_PUBLIC_RATIO1_DEMO_USERNAME || 'demo';
-const DEMO_PASSWORD = process.env.NEXT_PUBLIC_RATIO1_DEMO_PASSWORD || 'demo';
-
 export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
@@ -36,7 +33,7 @@ export default function LoginPage() {
     } catch (error) {
       toast.show({
         title: 'Invalid credentials',
-        description: 'Use the demo/demo credentials or contact an administrator.',
+        description: 'Contact an administrator if you need access.',
         tone: 'danger'
       });
     } finally {
@@ -81,24 +78,12 @@ export default function LoginPage() {
             decentralized audit trail.
           </p>
         </header>
-        <div
-          style={{
-            padding: 'clamp(0.65rem, 3vw, 0.75rem) clamp(0.85rem, 3.5vw, 1rem)',
-            borderRadius: '0.85rem',
-            border: '1px solid var(--color-border)',
-            background: 'rgba(91,108,240,0.08)',
-            color: 'var(--color-text-secondary)',
-            fontSize: 'clamp(0.85rem, 2.8vw, 0.9rem)'
-          }}
-        >
-          Demo credentials: <strong>{DEMO_USERNAME}</strong> / <strong>{DEMO_PASSWORD}</strong>
-        </div>
         <label style={{ display: 'grid', gap: '0.35rem' }}>
           <span style={{ fontWeight: 600 }}>Operator username</span>
           <input
             value={username}
             onChange={(event) => setUsername(event.target.value)}
-            placeholder="demo"
+            placeholder="username"
             style={inputStyle}
           />
         </label>
@@ -127,7 +112,7 @@ export default function LoginPage() {
             opacity: loading ? 0.6 : 1
           }}
         >
-          {loading ? 'Authenticating…' : 'Sign in with dAuth'}
+          {loading ? 'Authenticating…' : 'Sign in'}
         </button>
       </form>
     </main>

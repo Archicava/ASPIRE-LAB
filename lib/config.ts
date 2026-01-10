@@ -10,20 +10,6 @@ function ensureHttpProtocol(url: string | undefined): string | undefined {
   return `http://${url}`;
 }
 
-function parseBoolean(value: string | undefined, fallback: boolean): boolean {
-  if (value === undefined) {
-    return fallback;
-  }
-  const normalized = value.trim().toLowerCase();
-  if (['1', 'true', 'yes', 'y'].includes(normalized)) {
-    return true;
-  }
-  if (['0', 'false', 'no', 'n'].includes(normalized)) {
-    return false;
-  }
-  return fallback;
-}
-
 function parseChainstorePeers(value: string | undefined): string[] {
   const raw = value?.trim();
   if (!raw) {
@@ -57,45 +43,46 @@ function parseChainstorePeers(value: string | undefined): string[] {
 }
 
 const cstoreApiUrl = ensureHttpProtocol(
-  process.env.EE_CHAINSTORE_API_URL || process.env.CHAINSTORE_API_URL
+  process.env.R1EN_CHAINSTORE_API_URL ||
+    process.env.EE_CHAINSTORE_API_URL ||
+    process.env.CHAINSTORE_API_URL
 );
 
 const r1fsApiUrl = ensureHttpProtocol(
-  process.env.EE_R1FS_API_URL || process.env.R1FS_API_URL
+  process.env.R1EN_R1FS_API_URL || process.env.EE_R1FS_API_URL || process.env.R1FS_API_URL
 );
 
 const chainstorePeers = parseChainstorePeers(
-  process.env.EE_CHAINSTORE_PEERS || process.env.CHAINSTORE_PEERS
+  process.env.R1EN_CHAINSTORE_PEERS ||
+    process.env.EE_CHAINSTORE_PEERS ||
+    process.env.CHAINSTORE_PEERS
 );
 
-const rawUseMocks = process.env.NEXT_PUBLIC_RATIO1_USE_MOCKS || process.env.RATIO1_USE_MOCKS;
-const fallbackUseMocks = !(cstoreApiUrl && r1fsApiUrl);
-const useMocks = parseBoolean(rawUseMocks, fallbackUseMocks);
+if (!cstoreApiUrl || !r1fsApiUrl) {
+  throw new Error(
+    'Missing Ratio1 endpoints. Set R1EN_CHAINSTORE_API_URL and R1EN_R1FS_API_URL (or EE_/legacy variants).'
+  );
+}
 
 const authSessionCookieName = process.env.AUTH_SESSION_COOKIE || 'r1-session';
 const parsedSessionTtl = parseInt(process.env.AUTH_SESSION_TTL_SECONDS || '86400', 10);
 const authSessionTtlSeconds = Number.isFinite(parsedSessionTtl) ? parsedSessionTtl : 86400;
-const cstoreAuthHkey = process.env.EE_CSTORE_AUTH_HKEY || process.env.CSTORE_AUTH_HKEY;
-const cstoreAuthSecret = process.env.EE_CSTORE_AUTH_SECRET || process.env.CSTORE_AUTH_SECRET;
-const adminUsername = process.env.ADMIN_USERNAME || process.env.RATIO1_ADMIN_USERNAME || 'admin';
-const adminPassword = process.env.ADMIN_PASSWORD || process.env.RATIO1_ADMIN_PASSWORD || 'admin123';
+const cstoreAuthHkey =
+  process.env.R1EN_CSTORE_AUTH_HKEY ||
+  process.env.EE_CSTORE_AUTH_HKEY ||
+  process.env.CSTORE_AUTH_HKEY;
+const cstoreAuthSecret =
+  process.env.R1EN_CSTORE_AUTH_SECRET ||
+  process.env.EE_CSTORE_AUTH_SECRET ||
+  process.env.CSTORE_AUTH_SECRET;
 
 export const platformConfig = {
   DEBUG: rawDebug,
-  useMocks,
   cstoreApiUrl,
   r1fsApiUrl,
   chainstorePeers,
   casesHKey: process.env.RATIO1_CASES_HKEY || 'ratio1-asd-cases',
   jobsHKey: process.env.RATIO1_JOBS_HKEY || 'ratio1-asd-jobs',
-  demoCredentials: {
-    username: process.env.RATIO1_DEMO_USERNAME || 'demo',
-    password: process.env.RATIO1_DEMO_PASSWORD || 'demo'
-  },
-  adminCredentials: {
-    username: adminUsername,
-    password: adminPassword
-  },
   auth: {
     sessionCookieName: authSessionCookieName,
     sessionTtlSeconds: authSessionTtlSeconds,

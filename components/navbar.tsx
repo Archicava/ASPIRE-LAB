@@ -17,8 +17,7 @@ export function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const isAdmin = user?.role === 'admin';
-  const links = isAdmin ? [...navLinks, { href: '/admin', label: 'Admin' }] : navLinks;
+  const links = navLinks;
 
   useEffect(() => {
     setIsMenuOpen(false);
@@ -100,12 +99,12 @@ export function Navbar() {
                   fontWeight: 700,
                   letterSpacing: '0.03em'
                 }}
-                title={user.displayName || 'Demo Clinician'}
+                title={user.displayName || 'Operator'}
               >
-                {getInitials(user.displayName || 'Demo Clinician')}
+                {getInitials(user.displayName || 'Operator')}
               </div>
               <p style={{ margin: 0, fontWeight: 700, fontSize: 'clamp(0.85rem, 2.4vw, 0.95rem)' }}>
-                {user.displayName || 'Demo Clinician'}
+                {user.displayName || 'Operator'}
               </p>
             </div>
             <button
@@ -138,9 +137,9 @@ export function Navbar() {
 }
 
 function getInitials(name: string) {
-  if (!name) return 'D';
+  if (!name) return 'O';
   const parts = name.trim().split(/\s+/);
   const first = parts[0]?.[0] ?? '';
   const second = parts[1]?.[0] ?? '';
-  return (first + second || first || 'D').toUpperCase();
+  return (first + second || first || 'O').toUpperCase();
 }
