@@ -31,6 +31,18 @@ type ErrorResponse = {
   mode?: 'live';
 };
 
+function getErrorMessage(data: UsersResponse | UserCreatedResponse | ErrorResponse | null): string | null {
+  if (!data || typeof data !== 'object') {
+    return null;
+  }
+
+  if ('error' in data && typeof data.error === 'string') {
+    return data.error;
+  }
+
+  return null;
+}
+
 export default function AdminPage() {
   const { user } = useAuth();
   const router = useRouter();
@@ -60,7 +72,7 @@ export default function AdminPage() {
       const data = (await response.json().catch(() => null)) as UsersResponse | ErrorResponse | null;
 
       if (!response.ok || !data) {
-        const message = typeof data?.error === 'string' ? data.error : 'Failed to load users.';
+        const message = getErrorMessage(data) ?? 'Failed to load users.';
         setError(message);
         if (data && 'mode' in data && data.mode === 'live') {
           setMode('live');
@@ -116,7 +128,7 @@ export default function AdminPage() {
         const data = (await response.json().catch(() => null)) as UserCreatedResponse | ErrorResponse | null;
 
         if (!response.ok || !data) {
-          const message = typeof data?.error === 'string' ? data.error : 'Failed to create user.';
+          const message = getErrorMessage(data) ?? 'Failed to create user.';
           toast.show({ title: message, tone: 'danger' });
           setError(message);
           if (data && 'mode' in data && data.mode === 'live') {

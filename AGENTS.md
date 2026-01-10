@@ -37,6 +37,7 @@ Update rules:
 - 2025-12-23: Initial project review and created AGENTS.md with auth + architecture notes.
 - 2025-12-23: Added signed session cookies, server-side auth checks, and updated docs/login copy.
 - 2026-01-10: Added mock user store, local session cache, and admin user provisioning UI/API.
+- 2026-01-10: Fixed admin page error handling type guard to unblock Next.js build.
 
 ## Open Questions
 - Should live mode user provisioning call Ratio1 CStore (`simple.createUser`) or remain mock-only?
