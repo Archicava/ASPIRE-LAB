@@ -69,7 +69,7 @@ export function PredictiveLab({ cases, seedCase }: { cases: CaseRecord[]; seedCa
           <div>
             <p className="section-title">Predictive inference lab</p>
             <h1 style={{ margin: '0.35rem 0 0', fontSize: 'clamp(1.3rem, 3.6vw, 1.6rem)', fontWeight: 600 }}>
-              Generate Ratio1 probability scenarios
+              Generate Aspire probability scenarios
             </h1>
           </div>
           <select

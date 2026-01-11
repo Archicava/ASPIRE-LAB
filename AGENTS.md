@@ -50,3 +50,5 @@ Update rules:
 - 2026-01-12: Renamed the ASD program extension section to Aspire.
 - 2026-01-12: Updated research insights headline to Aspire product decisions.
 - 2026-01-12: Enlarged the navbar SVG logo size fourfold.
+- 2026-01-12: Matched the navbar logo height to nav elements and removed square styling.
+- 2026-01-12: Updated predictive lab copy to Aspire probability scenarios.
