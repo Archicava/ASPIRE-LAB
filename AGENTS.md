@@ -9,7 +9,7 @@ Update rules:
 - Do not record secrets or sensitive data.
 
 ## Project Snapshot
-- Next.js App Router prototype for Ratio1 Case Inference Studio.
+- Next.js App Router prototype for Aspire - Archicava Case Inference Studio.
 - Live mode uses Ratio1 Edge Node services.
 
 ## Architecture Notes
@@ -43,3 +43,7 @@ Update rules:
 - 2026-01-10: Added live admin user management page and `/api/users` endpoints.
 - 2026-01-10: Added admin password-change form on the user management page.
 - 2026-01-10: Added account page for self-service password changes and linked it in the nav.
+- 2026-01-11: Renamed the product in UI metadata, landing pill, and README.
+- 2026-01-11: Updated footer brand copy to Aspire - Archicava Inference Studio.
+- 2026-01-11: Swapped navbar branding to AspireLogo.svg, wired favicon metadata, and filled in the web manifest.
+- 2026-01-11: Removed navbar brand text to show only the logo.

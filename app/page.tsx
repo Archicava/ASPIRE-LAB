@@ -30,7 +30,7 @@ export default function LandingPage() {
     <main className="landing-main">
       <div className="landing-shell">
         <section className="fade-in">
-          <span className="pill">Ratio1 Case Inference Studio</span>
+          <span className="pill">Aspire - Archicava Case Inference Studio</span>
           <h1 className="hero-title">
             Clinical intelligence for autism cohorts — powered by decentralized AI.
           </h1>

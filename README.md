@@ -1,4 +1,4 @@
-# ASPIRE – Ratio1 Case Inference Studio
+# ASPIRE - Archicava Case Inference Studio
 
 Prototype Next.js workspace that turns the Romanian autism cohort research into an interactive UI for
 Ratio1ʼs decentralized inference pipeline.

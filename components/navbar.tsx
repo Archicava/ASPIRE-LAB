@@ -31,21 +31,16 @@ export function Navbar() {
     <nav className={`card nav-shell ${isMenuOpen ? 'nav-open' : ''}`}>
       <div className="nav-left">
         <Link href="/workspace" className="nav-brand">
-          <div
+          <img
+            src="/AspireLogo.svg"
+            alt="Aspire logo"
             style={{
               width: 'clamp(32px, 7vw, 36px)',
               height: 'clamp(32px, 7vw, 36px)',
               borderRadius: '12px',
-              background: 'linear-gradient(135deg, rgba(91,108,240,1) 0%, rgba(177,191,255,1) 100%)',
-              display: 'grid',
-              placeItems: 'center',
-              color: 'white',
-              fontWeight: 700
+              objectFit: 'contain'
             }}
-          >
-            R1
-          </div>
-          <span className="nav-brand-text">Inference Studio</span>
+          />
         </Link>
       </div>
       <button
