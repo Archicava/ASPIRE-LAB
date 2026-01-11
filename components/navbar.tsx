@@ -35,8 +35,8 @@ export function Navbar() {
             src="/AspireLogo.svg"
             alt="Aspire logo"
             style={{
-              width: 'clamp(32px, 7vw, 36px)',
-              height: 'clamp(32px, 7vw, 36px)',
+              width: 'clamp(128px, 28vw, 144px)',
+              height: 'clamp(128px, 28vw, 144px)',
               borderRadius: '12px',
               objectFit: 'contain'
             }}

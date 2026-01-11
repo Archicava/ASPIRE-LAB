@@ -47,3 +47,6 @@ Update rules:
 - 2026-01-11: Updated footer brand copy to Aspire - Archicava Inference Studio.
 - 2026-01-11: Swapped navbar branding to AspireLogo.svg, wired favicon metadata, and filled in the web manifest.
 - 2026-01-11: Removed navbar brand text to show only the logo.
+- 2026-01-12: Renamed the ASD program extension section to Aspire.
+- 2026-01-12: Updated research insights headline to Aspire product decisions.
+- 2026-01-12: Enlarged the navbar SVG logo size fourfold.

@@ -70,7 +70,7 @@ export default function ResearchInsightsPage() {
       >
         <span className="pill">Romanian ASD cohort synthesis</span>
         <h1 style={{ margin: 0, fontSize: 'clamp(1.5rem, 4.2vw, 1.9rem)' }}>
-          Translating clinical research into Ratio1 product decisions
+          Translating clinical research into Aspire product decisions
         </h1>
         <p style={{ margin: 0, color: 'var(--color-text-secondary)', lineHeight: 1.65 }}>
           Insights distilled from the “Analysis of Autism Case Database and Research Context” whitepaper
@@ -133,7 +133,7 @@ export default function ResearchInsightsPage() {
         <header>
           <p className="section-title">Research roadmap</p>
           <h2 style={{ margin: '0.35rem 0 0', fontSize: 'clamp(1.2rem, 3.4vw, 1.4rem)', fontWeight: 600 }}>
-            Extending the Ratio1 ASD program
+            Extending the Aspire ASD program
           </h2>
         </header>
         <div
