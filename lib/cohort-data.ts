@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-import { CaseRecord } from '@/lib/types';
+import { CaseRecord, InferenceJob } from '@/lib/types';
 
 export type CohortSeedEntry = {
   caseId: string;
@@ -126,4 +126,61 @@ function computeMedian(values: number[]): number {
     return Number(((sorted[mid - 1] + sorted[mid]) / 2).toFixed(1));
   }
   return Number(sorted[mid].toFixed(1));
+}
+
+export function getMockInferenceJobs(): InferenceJob[] {
+  const cases = getCohortCaseRecords();
+  const jobs: InferenceJob[] = [];
+  const statuses: Array<'queued' | 'running' | 'succeeded' | 'failed'> = ['succeeded', 'succeeded', 'succeeded', 'running', 'queued'];
+
+  // Generate mock jobs for first 10 cases
+  cases.slice(0, 10).forEach((caseRecord, index) => {
+    const status = statuses[index % statuses.length];
+    const baseTime = new Date();
+    baseTime.setHours(baseTime.getHours() - (10 - index));
+
+    const job: InferenceJob = {
+      id: `JOB-${baseTime.getTime()}`,
+      caseId: caseRecord.id,
+      status,
+      submittedAt: baseTime.toISOString(),
+      statusHistory: [
+        { status: 'queued', timestamp: baseTime.toISOString() }
+      ]
+    };
+
+    if (status === 'running' || status === 'succeeded' || status === 'failed') {
+      const runningTime = new Date(baseTime);
+      runningTime.setMinutes(runningTime.getMinutes() + 5);
+      job.statusHistory.push({
+        status: 'running',
+        timestamp: runningTime.toISOString()
+      });
+    }
+
+    if (status === 'succeeded') {
+      const completedTime = new Date(baseTime);
+      completedTime.setMinutes(completedTime.getMinutes() + 15);
+      job.statusHistory.push({
+        status: 'succeeded',
+        timestamp: completedTime.toISOString()
+      });
+      job.completedAt = completedTime.toISOString();
+    }
+
+    if (status === 'failed') {
+      const failedTime = new Date(baseTime);
+      failedTime.setMinutes(failedTime.getMinutes() + 10);
+      job.statusHistory.push({
+        status: 'failed',
+        timestamp: failedTime.toISOString()
+      });
+      job.completedAt = failedTime.toISOString();
+      job.error = 'Mock inference error for testing purposes';
+    }
+
+    jobs.push(job);
+  });
+
+  return jobs;
 }

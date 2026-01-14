@@ -50,7 +50,8 @@ export function getRatio1NodeClient(): NodeClient {
       console.log('[ratio1] Node client initialised', {
         cstoreUrl: sharedOptions.cstoreUrl,
         r1fsUrl: sharedOptions.r1fsUrl,
-        peers: sharedOptions.chainstorePeers
+        peers: sharedOptions.chainstorePeers,
+        mockMode: platformConfig.MOCK_MODE
       });
     }
   }

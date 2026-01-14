@@ -1,3 +1,5 @@
+import { ENFORCE_MOCK_MODE } from './constants';
+
 const rawDebug = process.env.NODE_ENV !== 'production' || process.env.DEBUG === 'true';
 
 function ensureHttpProtocol(url: string | undefined): string | undefined {
@@ -58,7 +60,28 @@ const chainstorePeers = parseChainstorePeers(
     process.env.CHAINSTORE_PEERS
 );
 
+/**
+ * Mock mode logic:
+ * 1. If MOCK_MODE env variable is set, use its value (takes precedence)
+ * 2. If MOCK_MODE env variable is not set, use ENFORCE_MOCK_MODE constant
+ */
+const mockMode = process.env.MOCK_MODE !== undefined
+  ? process.env.MOCK_MODE === 'true'
+  : ENFORCE_MOCK_MODE;
+
+if (mockMode) {
+  console.log('[config] Mock mode enabled:',
+    process.env.MOCK_MODE !== undefined
+      ? `via MOCK_MODE env variable (${process.env.MOCK_MODE})`
+      : `via ENFORCE_MOCK_MODE constant (${ENFORCE_MOCK_MODE})`
+  );
+}
+
+// Even in MOCK_MODE, we need endpoints for authentication
 if (!cstoreApiUrl || !r1fsApiUrl) {
+  if (mockMode) {
+    console.warn('[config] MOCK_MODE enabled but endpoints not configured. Authentication will require valid endpoints.');
+  }
   throw new Error(
     'Missing Ratio1 endpoints. Set R1EN_CHAINSTORE_API_URL and R1EN_R1FS_API_URL (or EE_/legacy variants).'
   );
@@ -78,6 +101,7 @@ const cstoreAuthSecret =
 
 export const platformConfig = {
   DEBUG: rawDebug,
+  MOCK_MODE: mockMode,
   cstoreApiUrl,
   r1fsApiUrl,
   chainstorePeers,

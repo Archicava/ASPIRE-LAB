@@ -3,6 +3,7 @@ import { InvalidCredentialsError, type PublicUser } from '@ratio1/cstore-auth-ts
 
 import { ensureAuthInitialized, getAuthClient } from '@/lib/auth/cstore';
 import { createSessionCookie } from '@/lib/auth/session';
+import { platformConfig } from '@/lib/config';
 
 type AuthenticatedUser = PublicUser<Record<string, unknown>>;
 
@@ -56,6 +57,7 @@ export async function POST(request: Request) {
   }
 
   try {
+    // Always authenticate properly, even in MOCK_MODE
     const user = await authenticate(trimmedUsername, trimmedPassword);
     const token = crypto.randomUUID();
 

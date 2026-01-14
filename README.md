@@ -24,15 +24,89 @@ Then open http://localhost:3000 to explore the prototype. Configure the environm
 
 ### Configuration
 
-- `R1EN_CHAINSTORE_API_URL` / `R1EN_R1FS_API_URL` (or `EE_CHAINSTORE_API_URL` / `EE_R1FS_API_URL`) – CStore and R1FS endpoints exposed by the edge node container.
+- `MOCK_MODE` – set to `true` to enable mock mode (bypasses authentication and uses pre-seeded cohort data). **Perfect for demos, development, and testing without a live Ratio1 Edge Node.**
+- `R1EN_CHAINSTORE_API_URL` / `R1EN_R1FS_API_URL` (or `EE_CHAINSTORE_API_URL` / `EE_R1FS_API_URL`) – CStore and R1FS endpoints exposed by the edge node container. *Not required when MOCK_MODE=true.*
 - `R1EN_CHAINSTORE_PEERS` – optional JSON array of peer URLs passed to the Ratio1 SDK.
-- `R1EN_CSTORE_AUTH_HKEY` / `R1EN_CSTORE_AUTH_SECRET` (or `EE_CSTORE_AUTH_HKEY` / `EE_CSTORE_AUTH_SECRET`, or `CSTORE_AUTH_HKEY` / `CSTORE_AUTH_SECRET`) – credentials consumed by `@ratio1/cstore-auth-ts` to authenticate operators against CStore.
-- `R1EN_CSTORE_AUTH_BOOTSTRAP_ADMIN_PWD` (or legacy `EE_CSTORE_AUTH_BOOTSTRAP_ADMIN_PW`) – one-time bootstrap password for the initial `admin` user (required until that account exists).
+- `R1EN_CSTORE_AUTH_HKEY` / `R1EN_CSTORE_AUTH_SECRET` (or `EE_CSTORE_AUTH_HKEY` / `EE_CSTORE_AUTH_SECRET`, or `CSTORE_AUTH_HKEY` / `CSTORE_AUTH_SECRET`) – credentials consumed by `@ratio1/cstore-auth-ts` to authenticate operators against CStore. *Not required when MOCK_MODE=true.*
+- `R1EN_CSTORE_AUTH_BOOTSTRAP_ADMIN_PWD` (or legacy `EE_CSTORE_AUTH_BOOTSTRAP_ADMIN_PW`) – one-time bootstrap password for the initial `admin` user (required until that account exists). *Not required when MOCK_MODE=true.*
 - `AUTH_SESSION_SECRET` – server-side secret for signing auth sessions (required in production; use 32+ chars).
 - `AUTH_SESSION_COOKIE` / `AUTH_SESSION_TTL_SECONDS` – optional overrides for the session cookie name and lifespan (defaults: `r1-session`, 86400 seconds).
 - `RATIO1_CASES_HKEY` / `RATIO1_JOBS_HKEY` – hash keys used when persisting case records and inference jobs into CStore (defaults align with the ASD prototype namespace).
 
 Protected routes and API endpoints require a signed session cookie issued by `/api/auth/login`.
+
+### Mock Mode
+
+**MOCK_MODE** is a special development and demo mode that displays pre-seeded data without querying the live Ratio1 Edge Node for case data.
+
+#### Configuration Priority
+
+Mock mode can be controlled in two ways:
+
+1. **MOCK_MODE environment variable** (highest priority)
+2. **ENFORCE_MOCK_MODE constant** in `lib/constants.ts` (fallback when env not set)
+
+**Priority table:**
+
+| ENFORCE_MOCK_MODE (code) | MOCK_MODE (env) | Result |
+|--------------------------|-----------------|--------|
+| `true` | not set | ✅ Mock mode |
+| `true` | `"true"` | ✅ Mock mode |
+| `true` | `"false"` | ❌ Real mode |
+| `false` | not set | ❌ Real mode |
+| `false` | `"true"` | ✅ Mock mode |
+| `false` | `"false"` | ❌ Real mode |
+
+**How to enable:**
+
+```bash
+# Option 1: Via environment variable (overrides constant)
+# In .env file
+MOCK_MODE=true
+
+# Option 2: Via code constant (when env not set)
+# In lib/constants.ts
+export const ENFORCE_MOCK_MODE = true;
+
+# Note: You still need valid CStore/R1FS endpoints and auth credentials
+R1EN_CHAINSTORE_API_URL=http://localhost:8080
+R1EN_R1FS_API_URL=http://localhost:8081
+R1EN_CSTORE_AUTH_HKEY=aspire-auth
+R1EN_CSTORE_AUTH_SECRET=your-secret
+R1EN_CSTORE_AUTH_BOOTSTRAP_ADMIN_PWD=admin-password
+```
+
+**Use cases for ENFORCE_MOCK_MODE:**
+- Development builds: Set to `true` for mock mode by default
+- Production builds: Set to `false` for real data by default
+- CI/CD pipelines: Set in code, override with env for specific environments
+
+**What it does:**
+- **Authentication still required** – uses real CStore authentication with valid credentials
+- **Uses pre-seeded cohort data** – displays cases from `data/cohort-cstore.json` (Romanian ASD cohort) instead of querying CStore for cases
+- **Returns mock inference jobs** – generates realistic job statuses (queued, running, succeeded, failed)
+- **Simulates platform health** – returns mock CStore/R1FS status responses
+- **Skips data persistence** – case submissions are accepted but not stored in CStore/R1FS
+
+**Perfect for:**
+- Development with limited Edge Node data
+- Demos with consistent, realistic data
+- UI/UX testing with pre-seeded cohort
+- Testing without creating real case records
+
+**What still works normally:**
+- ✅ User authentication (login/logout with real credentials)
+- ✅ User management (create/update users in CStore)
+- ✅ Session management (signed cookies, TTL)
+- ✅ Role-based access control
+
+**What is mocked:**
+- 📦 Case records (returns pre-seeded cohort data)
+- 📦 Inference jobs (generates mock statuses)
+- 📦 Platform status (simulated health checks)
+- 📦 Case submission persistence (accepted but not stored)
+
+**Note:** Mock mode is ideal for demos and development where you want consistent data without modifying the live CStore database.
 
 Run `npm run seed:cohort` to regenerate the JSON seeds (`data/cohort-seed.json`, `data/cohort-cstore.json`) from the Excel workbook when the source dataset is updated.
 
