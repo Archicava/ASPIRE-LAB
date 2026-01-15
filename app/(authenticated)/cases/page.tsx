@@ -4,6 +4,9 @@ import { loadCaseRecords } from '@/lib/data-platform';
 import { CaseRecord } from '@/lib/types';
 import { Hero } from '@/components/hero';
 
+// Force dynamic rendering (don't statically generate at build time)
+export const dynamic = 'force-dynamic';
+
 export default async function CasesPage() {
   const cases = await loadCaseRecords();
   const aggregatedCategories = aggregateCategories(cases);

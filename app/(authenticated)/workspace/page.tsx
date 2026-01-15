@@ -10,6 +10,9 @@ import {
 } from "@/lib/data-platform";
 import { Hero } from "@/components/hero";
 
+// Force dynamic rendering (don't statically generate at build time)
+export const dynamic = 'force-dynamic';
+
 export default async function WorkspacePage() {
   const [cases, jobs, status] = await Promise.all([
     loadCaseRecords(),

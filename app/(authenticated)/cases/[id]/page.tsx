@@ -6,6 +6,9 @@ import { loadCaseRecord, loadInferenceJob } from '@/lib/data-platform';
 import { formatDate } from '@/lib/format';
 import { Hero } from '@/components/hero';
 
+// Force dynamic rendering (don't statically generate at build time)
+export const dynamic = 'force-dynamic';
+
 type CaseDetailPageProps = {
   params: { id: string };
 };

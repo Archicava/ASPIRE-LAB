@@ -4,6 +4,9 @@ import { PredictiveLab } from '@/components/predictive-lab';
 import { Hero } from '@/components/hero';
 import { loadCaseRecord, loadCaseRecords } from '@/lib/data-platform';
 
+// Force dynamic rendering (don't statically generate at build time)
+export const dynamic = 'force-dynamic';
+
 export default async function PredictPage({ searchParams }: { searchParams?: { caseId?: string } }) {
   const [cases, seedCase] = await Promise.all([
     loadCaseRecords(),

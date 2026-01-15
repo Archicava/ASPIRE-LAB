@@ -152,7 +152,7 @@ export function getMockInferenceJobs(): InferenceJob[] {
     if (status === 'running' || status === 'succeeded' || status === 'failed') {
       const runningTime = new Date(baseTime);
       runningTime.setMinutes(runningTime.getMinutes() + 5);
-      job.statusHistory.push({
+      job.statusHistory!.push({
         status: 'running',
         timestamp: runningTime.toISOString()
       });
@@ -161,7 +161,7 @@ export function getMockInferenceJobs(): InferenceJob[] {
     if (status === 'succeeded') {
       const completedTime = new Date(baseTime);
       completedTime.setMinutes(completedTime.getMinutes() + 15);
-      job.statusHistory.push({
+      job.statusHistory!.push({
         status: 'succeeded',
         timestamp: completedTime.toISOString()
       });
@@ -171,7 +171,7 @@ export function getMockInferenceJobs(): InferenceJob[] {
     if (status === 'failed') {
       const failedTime = new Date(baseTime);
       failedTime.setMinutes(failedTime.getMinutes() + 10);
-      job.statusHistory.push({
+      job.statusHistory!.push({
         status: 'failed',
         timestamp: failedTime.toISOString()
       });

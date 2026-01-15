@@ -58,6 +58,7 @@ export type InferenceJob = {
   edgeNode?: string;
   payloadCid?: string;
   result?: InferenceResult;
+  error?: string;
   statusHistory?: Array<{
     status: InferenceJobStatus;
     timestamp: string;
