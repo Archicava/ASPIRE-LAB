@@ -221,6 +221,13 @@ running inside a Ratio1 Edge Node.
 
 ## Citation
 
-If you use this work, please cite it using the provided BibTeX file:
-
-- [`aspire_bibtex.bib`](./aspire_bibtex.bib)
+```bibtex
+@software{Butusina2024ASPIRE,
+  author       = {Butusina, Petrica and Defranceschi, Alessandro and Caprita, Irina and Sofia, Andreea and Tomuta, Raluca and Toderian, Vitalii},
+  title        = {{ASPIRE Lab}: Decentralized Distributed Inferential Analytics for Genetic Syndrome Qualitative and Quantitative Research},
+  year         = {2024},
+  url          = {https://github.com/archicava/aspire},
+  organization = {ARCHICAVA and Godyris},
+  note         = {Software library}
+}
+```
