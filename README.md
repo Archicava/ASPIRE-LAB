@@ -162,6 +162,30 @@ persisting submissions into CStore while surfacing R1FS/CStore health snapshots.
   state and toast notifications
 - Ratio1 Edge Node SDK integration for live CStore/R1FS operations
 
+## ASPIREModels
+
+The machine-learning side of the project lives in the companion
+[ASPIREModels](https://github.com/Archicava/ASPIREModels) repository.
+`ASPIREModels` contains a PyTorch grid-search pipeline
+(`train_base_model.py`) that trains a binary ASD classifier on the top 8
+clinical features (~84 % of predictive power). The trained checkpoint
+(`best_model.pth`) and fitted preprocessor (`preprocessor.joblib`) are
+deployed behind the **Aspire ASD Screening API** -- a REST service this
+frontend calls at `ASPIRE_API_URL` (default `http://localhost:5083/predict`).
+
+```
+ASPIREModels                     ASPIRE (this repo)
+  train_base_model.py              lib/aspire-api.ts
+        |                                |
+   trains model                    calls /predict
+        |                                |
+        v                                v
+  best_model.pth  -->  Aspire ASD Screening API  <--  case submissions
+```
+
+See `lib/aspire-api.ts` for the payload mapping and `lib/config.ts` for the
+`ASPIRE_API_URL` / `ASPIRE_API_TIMEOUT_MS` environment variables.
+
 ## Folder structure
 
 - `app/` – Next.js routes (landing, login, workspace, cases, research)
